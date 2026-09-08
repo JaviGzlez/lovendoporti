@@ -35,13 +35,13 @@ export default async function HomePage() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-right"
+          className="object-cover object-[68%_center] lg:object-right"
         />
         {/* Velo blanco degradado para que el texto se lea */}
-        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-white/0 lg:via-45% lg:to-70%" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/90 via-50% to-white/10 lg:bg-gradient-to-r lg:via-white/85 lg:via-45% lg:to-white/0 lg:to-70%" />
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent" />
 
-        <div className="container-lv relative grid min-h-[560px] items-center py-16 lg:min-h-[640px] lg:grid-cols-2 lg:py-24">
+        <div className="container-lv relative grid min-h-[640px] items-start py-12 sm:min-h-[600px] lg:min-h-[640px] lg:grid-cols-2 lg:items-center lg:py-24">
           <div>
             <p className="eyebrow mb-4">Maquinaria dental de segunda mano</p>
             <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
