@@ -156,7 +156,7 @@ export async function getArticuloBySlug(slug: string): Promise<Articulo | null> 
 // ---------------------------------------------------------------------------
 export function fotoUrl(path: string | null | undefined, bucket = "equipos"): string | null {
   if (!path) return null;
-  if (path.startsWith("http")) return path;
+  if (path.startsWith("http") || path.startsWith("/")) return path; // URL absoluta o archivo en /public
   const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
   if (!base) return null;
   return `${base}/storage/v1/object/public/${bucket}/${path}`;
