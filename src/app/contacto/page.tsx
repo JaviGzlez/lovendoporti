@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { MessageCircle, Mail, MapPin } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 import ContactoForm from "@/components/ContactoForm";
 import { whatsappUrl } from "@/lib/utils";
 
@@ -20,14 +21,18 @@ export default function ContactoPage() {
           </p>
           <ul className="mt-8 space-y-4 text-sm">
             <li className="flex items-center gap-3">
-              <MessageCircle className="h-5 w-5 text-brand" />
+              <WhatsAppIcon variant="green" className="h-5 w-5" />
               <a href={whatsappUrl("Hola Mario, quiero hacerte una consulta.")} target="_blank" rel="noopener" className="hover:text-brand">
-                WhatsApp directo
+                WhatsApp: 629 51 96 74
               </a>
             </li>
             <li className="flex items-center gap-3">
+              <Phone className="h-5 w-5 text-brand" />
+              <a href="tel:+34629519674" className="hover:text-brand">629 51 96 74</a>
+            </li>
+            <li className="flex items-center gap-3">
               <Mail className="h-5 w-5 text-brand" />
-              <a href="mailto:hola@lovendoporti.es" className="hover:text-brand">hola@lovendoporti.es</a>
+              <a href="mailto:hola@lovendoportidental.es" className="hover:text-brand">hola@lovendoportidental.es</a>
             </li>
             <li className="flex items-center gap-3">
               <MapPin className="h-5 w-5 text-brand" />

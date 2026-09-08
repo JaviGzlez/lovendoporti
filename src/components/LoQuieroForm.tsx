@@ -1,7 +1,8 @@
 "use client";
 
 import { useActionState, useEffect, useState } from "react";
-import { MessageCircle, Search } from "lucide-react";
+import { Search } from "lucide-react";
+import WhatsAppIcon from "./WhatsAppIcon";
 import { loQuiero, type ActionResult } from "@/lib/actions";
 import type { Equipo } from "@/lib/types";
 import { formatPrecio } from "@/lib/utils";
@@ -37,7 +38,7 @@ export default function LoQuieroForm({ equipo }: { equipo: Equipo }) {
   if (!open) {
     return (
       <button onClick={() => setOpen(true)} className={vendido ? "btn-dark w-full" : "btn-primary w-full"}>
-        {vendido ? <Search className="h-4 w-4" /> : <MessageCircle className="h-4 w-4" />}
+        {vendido ? <Search className="h-4 w-4" /> : <WhatsAppIcon className="h-5 w-5" />}
         {vendido ? "Busco uno similar" : "Lo quiero"}
       </button>
     );
@@ -60,7 +61,7 @@ export default function LoQuieroForm({ equipo }: { equipo: Equipo }) {
       <ConsentCheckbox />
       {state?.error && <p className="text-sm text-red-600">{state.error}</p>}
       <SubmitButton className="btn w-full bg-[#25D366] text-white hover:bg-[#1eb85a]">
-        <MessageCircle className="h-4 w-4" /> Continuar a WhatsApp
+        <WhatsAppIcon className="h-5 w-5" /> Continuar a WhatsApp
       </SubmitButton>
     </form>
   );

@@ -2,7 +2,8 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { MessageCircle, X } from "lucide-react";
+import { X } from "lucide-react";
+import WhatsAppIcon from "./WhatsAppIcon";
 import { enviarContacto, type ActionResult } from "@/lib/actions";
 import ConsentCheckbox from "./ConsentCheckbox";
 import Honeypot from "./Honeypot";
@@ -41,7 +42,7 @@ export default function WhatsAppFloat() {
           aria-label="Contactar por WhatsApp"
           className="flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105"
         >
-          {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-7 w-7" />}
+          {open ? <X className="h-6 w-6" /> : <WhatsAppIcon className="h-8 w-8" />}
         </button>
       </div>
 
@@ -84,7 +85,7 @@ export default function WhatsAppFloat() {
             <ConsentCheckbox />
             {state?.error && <p className="text-sm text-red-600">{state.error}</p>}
             <SubmitButton className="btn w-full bg-[#25D366] text-white hover:bg-[#1eb85a]">
-              <MessageCircle className="h-4 w-4" /> Continuar a WhatsApp
+              <WhatsAppIcon className="h-5 w-5" /> Continuar a WhatsApp
             </SubmitButton>
           </form>
           </>

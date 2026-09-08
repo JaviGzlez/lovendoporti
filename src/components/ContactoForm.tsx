@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import { MessageCircle } from "lucide-react";
+import WhatsAppIcon from "./WhatsAppIcon";
 import { enviarContacto, type ActionResult } from "@/lib/actions";
 import ConsentCheckbox from "./ConsentCheckbox";
 import Honeypot from "./Honeypot";
@@ -52,7 +52,7 @@ export default function ContactoForm() {
       <ConsentCheckbox />
       {state?.error && <p className="text-sm text-red-600">{state.error}</p>}
       <SubmitButton className="btn w-full bg-[#25D366] text-white hover:bg-[#1eb85a]">
-        <MessageCircle className="h-4 w-4" /> Enviar y continuar por WhatsApp
+        <WhatsAppIcon className="h-5 w-5" /> Enviar y continuar por WhatsApp
       </SubmitButton>
     </form>
   );
