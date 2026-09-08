@@ -2,7 +2,7 @@ import { faInstagram, faFacebookF, faLinkedinIn, type IconDefinition } from "@fo
 import { cn } from "@/lib/utils";
 
 export const REDES = [
-  { nombre: "Instagram", href: "https://www.instagram.com/lovendoportimariozarzuela/", icon: faInstagram },
+  { nombre: "Instagram", href: "https://www.instagram.com/lovendoportidental/", icon: faInstagram },
   { nombre: "Facebook", href: "https://www.facebook.com/profile.php?id=61586318828466", icon: faFacebookF },
   { nombre: "LinkedIn", href: "https://www.linkedin.com/company/lo-vendo-por-ti/", icon: faLinkedinIn },
 ];
