@@ -27,7 +27,21 @@ export function whatsappUrl(mensaje: string) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
 }
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+/**
+ * URL pública del sitio. Orden: NEXT_PUBLIC_SITE_URL -> URL del despliegue en Vercel -> localhost.
+ * Tolera la variable vacía o sin protocolo.
+ */
+function resolveSiteUrl() {
+  const raw = (process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL || "").trim();
+  if (!raw) return "http://localhost:3000";
+  const withProto = /^https?:\/\//.test(raw) ? raw : `https://${raw}`;
+  try {
+    return new URL(withProto).origin;
+  } catch {
+    return "http://localhost:3000";
+  }
+}
+export const SITE_URL = resolveSiteUrl();
 export const SITE_NAME = "Lo vendo por ti";
 export const SITE_TAGLINE = "Tu material dental merece una segunda oportunidad";
 
