@@ -184,8 +184,8 @@ export default async function HomePage() {
       {/* QUIÉN SOY */}
       <section className="container-lv py-16">
         <div className="card relative overflow-hidden bg-gradient-to-br from-white via-white to-brand-light">
-          <div className="grid items-end gap-8 lg:grid-cols-5">
-            <div className="p-8 sm:p-10 lg:col-span-3 lg:py-14">
+          <div className="grid items-end gap-8 lg:grid-cols-3">
+            <div className="p-8 sm:p-10 lg:col-span-2 lg:py-12">
               <p className="eyebrow mb-3">Quién soy</p>
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Hola, soy Mario Zarzuela</h2>
               <p className="mt-4 max-w-xl text-muted">
@@ -198,13 +198,13 @@ export default async function HomePage() {
                 Conóceme <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
-            <div className="relative mx-auto -mb-1 w-64 sm:w-80 lg:col-span-2 lg:w-full lg:max-w-md">
+            <div className="relative mx-auto -mb-1 w-56 sm:w-64 lg:col-span-1 lg:mr-10 lg:w-72">
               <Image
                 src="/mario.webp"
                 alt="Mario Zarzuela"
                 width={1199}
                 height={1312}
-                sizes="(max-width: 1024px) 320px, 40vw"
+                sizes="288px"
                 className="h-auto w-full object-contain object-bottom"
               />
             </div>
