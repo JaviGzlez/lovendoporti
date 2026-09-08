@@ -30,7 +30,7 @@ export default async function HomePage() {
       <section className="relative overflow-hidden">
         {/* Fondo a sangre: fresadora + clínica difuminada */}
         <Image
-          src="/hero-bg.webp"
+          src="/hero-v2.webp"
           alt=""
           fill
           priority
