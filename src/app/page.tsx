@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, ShieldCheck, Settings2, HeartHandshake } from "lucide-react";
+import { ArrowRight, ShieldCheck, Settings2, HeartHandshake, Search, Tag } from "lucide-react";
 import {
   getArticulos,
   getCategorias,
@@ -12,7 +12,6 @@ import EquipoCard from "@/components/EquipoCard";
 import ArticuloCard from "@/components/ArticuloCard";
 import CategoryIcon from "@/components/CategoryIcon";
 import SectionHeading from "@/components/SectionHeading";
-import EquipoFoto from "@/components/EquipoFoto";
 
 export const dynamic = "force-dynamic";
 
@@ -24,58 +23,44 @@ export default async function HomePage() {
     getEquiposVendidos(4),
     getArticulos(3),
   ]);
-  const heroFoto = destacados[0]?.fotos[0] ?? null;
 
   return (
     <>
       {/* HERO */}
-      <section className="bg-gradient-to-b from-white to-surface">
-        <div className="container-lv grid items-center gap-10 py-14 lg:grid-cols-2 lg:py-20">
+      <section className="relative overflow-hidden">
+        {/* Fondo a sangre: fresadora + clínica difuminada */}
+        <Image
+          src="/hero-bg.webp"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-right"
+        />
+        {/* Velo blanco degradado para que el texto se lea */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/85 to-white/0 lg:via-45% lg:to-70%" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent" />
+
+        <div className="container-lv relative grid min-h-[560px] items-center py-16 lg:min-h-[640px] lg:grid-cols-2 lg:py-24">
           <div>
             <p className="eyebrow mb-4">Maquinaria dental de segunda mano</p>
             <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
               Equipos que siguen creando <span className="text-brand">sonrisas</span>
             </h1>
-            <p className="mt-5 max-w-lg text-lg text-muted">
+            <p className="mt-5 max-w-lg text-lg text-ink/75">
               Compra y vende maquinaria dental de forma segura, con el acompañamiento de un profesional.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/equipos" className="btn-primary">
-                Ver equipos <ArrowRight className="h-4 w-4" />
+              <Link href="/equipos" className="btn-primary !px-7 !py-3.5 shadow-lg shadow-brand/20">
+                <Search className="h-4 w-4" /> Ver equipos <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link href="/vender-mi-equipo" className="btn-outline">
-                Vender mi equipo
+              <Link href="/vender-mi-equipo" className="btn !px-7 !py-3.5 border-2 border-brand bg-white/80 text-brand backdrop-blur hover:bg-brand hover:text-white">
+                <Tag className="h-4 w-4" /> Vender mi equipo
               </Link>
             </div>
-            <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-4 text-sm">
-              <div>
-                <dt className="text-xl font-bold">Equipos revisados</dt>
-                <dd className="text-muted">con información real</dd>
-              </div>
-              <div>
-                <dt className="text-xl font-bold">Trato directo</dt>
-                <dd className="text-muted">sin intermediarios</dd>
-              </div>
-              <div>
-                <dt className="text-xl font-bold">Profesionales</dt>
-                <dd className="text-muted">que confían</dd>
-              </div>
-            </dl>
           </div>
-          <div className="relative">
-            <EquipoFoto
-              path={heroFoto}
-              alt="Maquinaria dental"
-              priority
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="aspect-[5/4] rounded-3xl shadow-card"
-            />
-            <p className="absolute -bottom-4 right-6 rotate-[-4deg] font-hand text-2xl text-ink/80 sm:text-3xl">
-              Tu material dental merece
-              <br />
-              una segunda oportunidad
-            </p>
-          </div>
+          {/* Alt accesible del hero */}
+          <span className="sr-only">Fresadora dental Roland DWX-52D de segunda mano</span>
         </div>
       </section>
 
