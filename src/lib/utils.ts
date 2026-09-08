@@ -31,8 +31,12 @@ export function whatsappUrl(mensaje: string) {
  * URL pública del sitio. Orden: NEXT_PUBLIC_SITE_URL -> URL del despliegue en Vercel -> localhost.
  * Tolera la variable vacía o sin protocolo.
  */
+const DOMINIO_PRODUCCION = "https://lovendoportidental.es"; // dominio canónico (el .com redirige aquí)
+
 function resolveSiteUrl() {
-  const raw = (process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL || "").trim();
+  // En producción siempre el dominio canónico, aunque la variable apunte al .com
+  if (process.env.VERCEL_ENV === "production") return DOMINIO_PRODUCCION;
+  const raw = (process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL || "").trim();
   if (!raw) return "http://localhost:3000";
   const withProto = /^https?:\/\//.test(raw) ? raw : `https://${raw}`;
   try {
