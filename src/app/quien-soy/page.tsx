@@ -12,9 +12,17 @@ export default function QuienSoyPage() {
   return (
     <div className="container-lv py-10 lg:py-14">
       <div className="grid items-center gap-10 lg:grid-cols-2">
-        <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-brand-light">
-          {/* Sustituir por la fotografía real de Mario: /public/mario.jpg */}
-          <Image src="/logo-icon.png" alt="Mario Zarzuela" fill className="object-contain p-16" />
+        <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+          <div className="absolute inset-x-6 bottom-0 top-16 rounded-[2.5rem] bg-gradient-to-b from-brand-light to-brand/20" />
+          <Image
+            src="/mario.webp"
+            alt="Mario Zarzuela, fundador de Lo vendo por ti"
+            width={1199}
+            height={1312}
+            priority
+            sizes="(max-width: 1024px) 90vw, 45vw"
+            className="relative h-auto w-full object-contain"
+          />
         </div>
         <div>
           <p className="eyebrow mb-2">Quién soy</p>

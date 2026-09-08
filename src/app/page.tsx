@@ -173,24 +173,40 @@ export default async function HomePage() {
             href="/blog"
             linkLabel="Ver todos los artículos"
           />
-          <div className="grid gap-6 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {articulos.map((a) => (
               <ArticuloCard key={a.id} articulo={a} />
             ))}
-            <div className="card flex flex-col gap-4 p-6 lg:col-span-1">
-              <div className="flex items-center gap-4">
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full bg-brand-light">
-                  <Image src="/logo-icon.png" alt="Mario Zarzuela" fill className="object-cover" />
-                </div>
-                <h3 className="text-xl font-bold">¿Quién soy?</h3>
-              </div>
-              <p className="text-sm text-muted">
-                Hola, soy Mario Zarzuela. Llevo años en el sector dental y creé Lo vendo por ti para ayudar a
-                profesionales como tú a comprar y vender equipos de forma sencilla, segura y cercana.
+          </div>
+        </div>
+      </section>
+
+      {/* QUIÉN SOY */}
+      <section className="container-lv py-16">
+        <div className="card relative overflow-hidden bg-gradient-to-br from-white via-white to-brand-light">
+          <div className="grid items-end gap-8 lg:grid-cols-5">
+            <div className="p-8 sm:p-10 lg:col-span-3 lg:py-14">
+              <p className="eyebrow mb-3">Quién soy</p>
+              <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Hola, soy Mario Zarzuela</h2>
+              <p className="mt-4 max-w-xl text-muted">
+                Llevo años en el sector dental y creé Lo vendo por ti para ayudar a profesionales como tú a comprar y
+                vender equipos de forma sencilla, segura y cercana. Cada equipo lo reviso yo y te acompaño en todo el
+                proceso.
               </p>
-              <Link href="/quien-soy" className="btn-outline mt-auto self-start !py-2 text-xs">
+              <p className="mt-4 font-hand text-2xl text-brand">Más que maquinaria, personas</p>
+              <Link href="/quien-soy" className="btn-outline mt-6 bg-white">
                 Conóceme <ArrowRight className="h-4 w-4" />
               </Link>
+            </div>
+            <div className="relative mx-auto -mb-1 w-64 sm:w-80 lg:col-span-2 lg:w-full lg:max-w-md">
+              <Image
+                src="/mario.webp"
+                alt="Mario Zarzuela"
+                width={1199}
+                height={1312}
+                sizes="(max-width: 1024px) 320px, 40vw"
+                className="h-auto w-full object-contain object-bottom"
+              />
             </div>
           </div>
         </div>
