@@ -5,8 +5,7 @@ export const TITULAR = {
   email: "hola@lovendoportidental.es",
   telefono: "629 51 96 74",
   telefonoIntl: "+34629519674",
-  // TODO: completar con la dirección postal (obligatoria según la LSSI-CE)
-  domicilio: "[Dirección postal del titular]",
+  domicilio: "Calle Porvera 7, 11401 Jerez de la Frontera (Cádiz)",
   web: "https://lovendoportidental.es",
   nombreComercial: "Lo vendo por ti",
 };

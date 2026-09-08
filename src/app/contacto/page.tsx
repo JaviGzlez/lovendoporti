@@ -36,7 +36,7 @@ export default function ContactoPage() {
             </li>
             <li className="flex items-center gap-3">
               <MapPin className="h-5 w-5 text-brand" />
-              <span>España · envíos a toda la península</span>
+              <span>Calle Porvera 7, 11401 Jerez de la Frontera (Cádiz)</span>
             </li>
           </ul>
         </div>
