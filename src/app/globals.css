@@ -1,26 +1,73 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-brand: #339bd8;
+  --color-brand-dark: #1f7fb8;
+  --color-brand-light: #e9f4fb;
+  --color-ink: #1c2530;
+  --color-muted: #64707d;
+  --color-line: #e6eaee;
+  --color-surface: #f6f8fa;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-hand: var(--font-caveat), cursive;
+  --shadow-card: 0 1px 2px rgba(28, 37, 48, 0.04), 0 8px 24px -12px rgba(28, 37, 48, 0.12);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@layer components {
+  .container-lv {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
+  .btn,
+  .btn-primary,
+  .btn-outline,
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-brand text-white hover:bg-brand-dark;
+  }
+  .btn-outline {
+    @apply border border-ink/80 text-ink hover:bg-ink hover:text-white;
+  }
+  .btn-dark {
+    @apply bg-ink text-white hover:bg-black;
+  }
+  .card {
+    @apply rounded-2xl border border-line bg-white shadow-card;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-ink;
+  }
+  .input {
+    @apply w-full rounded-xl border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-muted/70 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20;
+  }
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-muted;
+  }
+  .prose-lv h2 {
+    @apply mt-8 mb-3 text-2xl font-bold tracking-tight;
+  }
+  .prose-lv h3 {
+    @apply mt-6 mb-2 text-lg font-semibold;
+  }
+  .prose-lv p {
+    @apply mb-4 leading-relaxed text-ink/85;
+  }
+  .prose-lv ul {
+    @apply mb-4 list-disc space-y-1 pl-6 text-ink/85;
+  }
+  .prose-lv a {
+    @apply text-brand underline;
+  }
 }

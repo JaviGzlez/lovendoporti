@@ -1,69 +1,237 @@
+import Link from "next/link";
 import Image from "next/image";
+import { ArrowRight, ShieldCheck, Settings2, HeartHandshake } from "lucide-react";
+import {
+  getArticulos,
+  getCategorias,
+  getEquiposDestacados,
+  getEquiposVendidos,
+  getUltimosEquipos,
+} from "@/lib/data";
+import EquipoCard from "@/components/EquipoCard";
+import ArticuloCard from "@/components/ArticuloCard";
+import CategoryIcon from "@/components/CategoryIcon";
+import SectionHeading from "@/components/SectionHeading";
+import EquipoFoto from "@/components/EquipoFoto";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const [categorias, destacados, ultimos, vendidos, articulos] = await Promise.all([
+    getCategorias(),
+    getEquiposDestacados(4),
+    getUltimosEquipos(4),
+    getEquiposVendidos(4),
+    getArticulos(3),
+  ]);
+  const heroFoto = destacados[0]?.fotos[0] ?? null;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <>
+      {/* HERO */}
+      <section className="bg-gradient-to-b from-white to-surface">
+        <div className="container-lv grid items-center gap-10 py-14 lg:grid-cols-2 lg:py-20">
+          <div>
+            <p className="eyebrow mb-4">Maquinaria dental de segunda mano</p>
+            <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+              Equipos que siguen creando <span className="text-brand">sonrisas</span>
+            </h1>
+            <p className="mt-5 max-w-lg text-lg text-muted">
+              Compra y vende maquinaria dental de forma segura, con el acompañamiento de un profesional.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/equipos" className="btn-primary">
+                Ver equipos <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link href="/vender-mi-equipo" className="btn-outline">
+                Vender mi equipo
+              </Link>
+            </div>
+            <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-4 text-sm">
+              <div>
+                <dt className="text-xl font-bold">Equipos revisados</dt>
+                <dd className="text-muted">con información real</dd>
+              </div>
+              <div>
+                <dt className="text-xl font-bold">Trato directo</dt>
+                <dd className="text-muted">sin intermediarios</dd>
+              </div>
+              <div>
+                <dt className="text-xl font-bold">Profesionales</dt>
+                <dd className="text-muted">que confían</dd>
+              </div>
+            </dl>
+          </div>
+          <div className="relative">
+            <EquipoFoto
+              path={heroFoto}
+              alt="Maquinaria dental"
+              priority
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="aspect-[5/4] rounded-3xl shadow-card"
+            />
+            <p className="absolute -bottom-4 right-6 rotate-[-4deg] font-hand text-2xl text-ink/80 sm:text-3xl">
+              Tu material dental merece
+              <br />
+              una segunda oportunidad
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CATEGORÍAS */}
+      <section className="border-y border-line bg-white">
+        <div className="container-lv flex gap-2 overflow-x-auto py-6 [scrollbar-width:none]">
+          {categorias.map((c) => (
+            <Link
+              key={c.id}
+              href={`/equipos?categoria=${c.slug}`}
+              className="flex min-w-[110px] flex-1 flex-col items-center gap-2 rounded-xl px-3 py-3 text-center text-sm text-ink/80 transition hover:bg-surface hover:text-brand"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              <CategoryIcon name={c.icono} className="h-7 w-7" />
+              {c.nombre}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* DESTACADOS */}
+      {destacados.length > 0 && (
+        <section className="container-lv py-16">
+          <SectionHeading
+            title="Equipos destacados"
+            subtitle="Maquinaria dental de segunda mano en excelente estado."
+            href="/equipos"
+            linkLabel="Ver todos los equipos"
+          />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {destacados.map((e) => (
+              <EquipoCard key={e.id} equipo={e} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* CONFIANZA */}
+      <section className="bg-brand-light/60">
+        <div className="container-lv grid gap-8 py-10 sm:grid-cols-3 lg:grid-cols-4 lg:items-center">
+          <Feature icon={ShieldCheck} title="Trato directo" text="y profesional" />
+          <Feature icon={Settings2} title="Equipos revisados" text="y con información real" />
+          <Feature icon={HeartHandshake} title="Te acompañamos" text="en todo el proceso" />
+          <p className="hidden rotate-[-4deg] font-hand text-3xl text-ink/80 lg:block lg:text-right">
+            Más que maquinaria,
+            <br />
+            personas
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* ÚLTIMAS INCORPORACIONES */}
+      {ultimos.length > 0 && (
+        <section className="container-lv py-16">
+          <SectionHeading title="Últimas incorporaciones" href="/equipos" linkLabel="Ver catálogo" />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {ultimos.map((e) => (
+              <EquipoCard key={e.id} equipo={e} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* VENDER / BUSCO */}
+      <section className="container-lv grid gap-6 pb-16 lg:grid-cols-2">
+        <div className="card flex flex-col justify-between gap-6 bg-ink p-8 text-white sm:p-10">
+          <div>
+            <p className="eyebrow text-white/60">¿Tienes un equipo que ya no utilizas?</p>
+            <h2 className="mt-3 text-2xl font-bold sm:text-3xl">
+              Nosotros lo ponemos delante de profesionales interesados.
+            </h2>
+          </div>
+          <Link href="/vender-mi-equipo" className="btn bg-white text-ink hover:bg-brand hover:text-white self-start">
+            Vender mi equipo <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
-      </main>
+        <div className="card flex flex-col justify-between gap-6 p-8 sm:p-10">
+          <div>
+            <p className="eyebrow">¿Buscas un equipo concreto?</p>
+            <h2 className="mt-3 text-2xl font-bold sm:text-3xl">
+              Cuéntanos qué necesitas y te avisamos cuando lo tengamos.
+            </h2>
+          </div>
+          <Link href="/busco-un-equipo" className="btn-primary self-start">
+            Busco un equipo <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
+
+      {/* BLOG + QUIÉN SOY */}
+      <section className="bg-surface">
+        <div className="container-lv py-16">
+          <SectionHeading
+            title="Últimos artículos del blog"
+            subtitle="Consejos, novedades y todo lo que necesitas saber sobre maquinaria dental."
+            href="/blog"
+            linkLabel="Ver todos los artículos"
+          />
+          <div className="grid gap-6 lg:grid-cols-4">
+            {articulos.map((a) => (
+              <ArticuloCard key={a.id} articulo={a} />
+            ))}
+            <div className="card flex flex-col gap-4 p-6 lg:col-span-1">
+              <div className="flex items-center gap-4">
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full bg-brand-light">
+                  <Image src="/logo-icon.png" alt="Mario Zarzuela" fill className="object-cover" />
+                </div>
+                <h3 className="text-xl font-bold">¿Quién soy?</h3>
+              </div>
+              <p className="text-sm text-muted">
+                Hola, soy Mario Zarzuela. Llevo años en el sector dental y creé Lo vendo por ti para ayudar a
+                profesionales como tú a comprar y vender equipos de forma sencilla, segura y cercana.
+              </p>
+              <Link href="/quien-soy" className="btn-outline mt-auto self-start !py-2 text-xs">
+                Conóceme <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* VENDIDOS */}
+      {vendidos.length > 0 && (
+        <section className="container-lv py-16">
+          <SectionHeading
+            title="Vendidos recientemente"
+            subtitle="¿Buscas uno similar? Entra en la ficha y cuéntanoslo."
+            href="/equipos?estado=vendido"
+            linkLabel="Ver vendidos"
+          />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {vendidos.map((e) => (
+              <EquipoCard key={e.id} equipo={e} />
+            ))}
+          </div>
+        </section>
+      )}
+    </>
+  );
+}
+
+function Feature({
+  icon: Icon,
+  title,
+  text,
+}: {
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  title: string;
+  text: string;
+}) {
+  return (
+    <div className="flex items-center gap-4">
+      <Icon className="h-10 w-10 text-brand" strokeWidth={1.5} />
+      <p className="text-sm leading-snug">
+        <span className="block font-semibold">{title}</span>
+        <span className="text-muted">{text}</span>
+      </p>
     </div>
   );
 }

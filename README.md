@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lo vendo por ti · Web + portal de gestión
 
-## Getting Started
+Marketplace controlado de maquinaria dental de segunda mano (Mario Zarzuela).
+Stack: **Next.js 16 (App Router) + TypeScript + Tailwind v4 + Supabase**.
 
-First, run the development server:
+## Arrancar en local
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Sin `.env.local` la web funciona en **modo demo** con datos de ejemplo (`src/lib/demo-data.ts`):
+los formularios validan y muestran el mensaje de éxito, pero no guardan nada (lo imprimen en consola).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Configurar Supabase
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Crea un proyecto en [supabase.com](https://supabase.com) (región EU, p. ej. Frankfurt).
+2. En **SQL Editor** ejecuta `supabase/schema.sql` completo (tablas, RLS, buckets de storage).
+3. Opcional: ejecuta `supabase/seed.sql` para tener equipos y artículos de ejemplo.
+4. En **Authentication → Users** crea el usuario de Mario (email + contraseña). Es el único acceso al panel.
+5. Copia `.env.example` a `.env.local` y rellena las claves de **Project Settings → API**
+   y el número de WhatsApp de Mario.
 
-## Learn More
+## Estructura
 
-To learn more about Next.js, take a look at the following resources:
+```
+supabase/schema.sql        Esquema completo (ejecutar en Supabase)
+supabase/seed.sql          Datos de ejemplo
+src/proxy.ts               Refresca sesión y protege /admin (antiguo middleware)
+src/lib/supabase/          Clientes (servidor, navegador, service role)
+src/lib/data.ts            Lectura del catálogo/blog (con fallback demo)
+src/lib/actions.ts         Server Actions: contacto, lo quiero, vender, busco, eventos
+src/lib/types.ts           Tipos
+src/app/                   Páginas públicas + /admin (placeholder)
+src/components/            UI
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Páginas públicas (fase 1 — hecho)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Ruta | Qué hace |
+|---|---|
+| `/` | Hero, categorías, destacados, últimas incorporaciones, CTAs vender/busco, blog, quién soy, vendidos |
+| `/equipos` | Catálogo con buscador, filtro por categoría, estado y orden |
+| `/equipos/[slug]` | Ficha: galería, referencia LVP-xxxx, precio, estado, qué incluye, **Lo quiero** → guarda solicitud + abre WhatsApp. Si está vendido: **Busco uno similar**. JSON-LD Product para SEO |
+| `/vender-mi-equipo` | Formulario con subida de fotos (bucket privado `solicitudes`) |
+| `/busco-un-equipo` | Formulario que entra en el mini CRM como tipo `busco` |
+| `/blog`, `/blog/[slug]` | Artículos en Markdown guardados en Supabase |
+| `/quien-soy`, `/contacto`, `/aviso-legal`, `/privacidad` | Páginas estáticas |
+| Botón WhatsApp flotante | Formulario previo (comprar/vender) → guarda contacto → abre WhatsApp |
+| `sitemap.xml`, `robots.txt` | Generados automáticamente |
 
-## Deploy on Vercel
+### Pendiente (fase 2 — panel privado `/admin`)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Login (Supabase Auth) — el `proxy.ts` ya redirige a `/admin/login`.
+- Dashboard: publicados / disponibles / reservados / vendidos, volumen del mes, ingresos.
+- Alta y edición de equipos (fotos al bucket `equipos`, destacar, ocultar, cambiar estado).
+- Marcar como vendido → registro en `ventas` (fecha, precio final, comisión, notas).
+- Mini CRM de `solicitudes` con estados, notas e historial, filtros por periodo.
+- Editor de artículos del blog.
+- Estadísticas (vista `equipo_stats`).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Antes de publicar
+
+- Rellenar NIF/domicilio en `aviso-legal` y `privacidad` y revisarlos con un asesor.
+- Poner la foto real de Mario en `public/mario.jpg` y usarla en `quien-soy` y la home.
+- URLs reales de redes sociales en `Footer.tsx`.
+- Email de contacto real (`hola@lovendoporti.es` es provisional).
+- `NEXT_PUBLIC_SITE_URL` con el dominio definitivo.
