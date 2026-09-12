@@ -3,7 +3,7 @@
  * (sin .env.local). Fotos en /public/equipos (recortes provisionales de las
  * publicaciones de Instagram; sustituir por fotos originales cuando se tengan).
  */
-import type { Articulo, Categoria, Equipo } from "./types";
+import type { Categoria, Equipo } from "./types";
 
 export const demoCategorias: Categoria[] = [
   { id: 1, slug: "fresadoras", nombre: "Fresadoras", icono: "Cog", orden: 1 },
@@ -209,38 +209,4 @@ export const demoEquipos: Equipo[] = SEED.map((s, i) => ({
   created_at: daysAgo(s.dias),
 }));
 
-export const demoArticulos: Articulo[] = [
-  {
-    id: "a1",
-    slug: "que-tener-en-cuenta-al-comprar-fresadora-dental-segunda-mano",
-    titulo: "¿Qué tener en cuenta al comprar una fresadora dental de segunda mano?",
-    extracto: "Horas de uso, mantenimiento, husillo y calibración: las claves para acertar.",
-    contenido:
-      "## Horas de uso\n\nLas horas de husillo son el dato más importante para valorar una fresadora usada. Un husillo tiene una vida útil aproximada y sustituirlo tiene un coste que debes conocer antes de comprar.\n\n## Mantenimiento\n\nPide el historial de mantenimiento y las últimas calibraciones. Un equipo bien cuidado se nota en los detalles.\n\n## Herramientas y accesorios\n\nComprueba qué se incluye: cambiador de herramientas, compresor, aspiración y software.",
-    portada: null,
-    publicado: true,
-    publicado_at: daysAgo(3),
-  },
-  {
-    id: "a2",
-    slug: "como-mantener-tu-escaner-dental-en-perfecto-estado",
-    titulo: "Cómo mantener tu escáner dental en perfecto estado",
-    extracto: "Consejos sencillos para alargar la vida útil de tu escáner de laboratorio.",
-    contenido:
-      "## Limpieza\n\nUtiliza siempre paños de microfibra y evita productos abrasivos sobre las ópticas.\n\n## Calibración\n\nCalibra el equipo con la frecuencia que recomienda el fabricante.",
-    portada: null,
-    publicado: true,
-    publicado_at: daysAgo(11),
-  },
-  {
-    id: "a3",
-    slug: "ventajas-de-la-impresion-3d-en-el-laboratorio-dental",
-    titulo: "Ventajas de la impresión 3D en el laboratorio dental",
-    extracto: "Por qué cada vez más laboratorios incorporan impresoras 3D a su flujo digital.",
-    contenido:
-      "## Velocidad\n\nModelos, férulas y guías quirúrgicas en cuestión de horas.\n\n## Coste\n\nEl precio de las impresoras de segunda mano permite dar el salto al flujo digital con una inversión contenida.",
-    portada: null,
-    publicado: true,
-    publicado_at: daysAgo(19),
-  },
-];
+export { articulosDemo as demoArticulos } from "./articulos";
