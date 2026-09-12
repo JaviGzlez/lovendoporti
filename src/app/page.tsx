@@ -27,22 +27,26 @@ export default async function HomePage() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden">
-        {/* Fondo a sangre: fresadora + clínica difuminada */}
+      {/*
+        Estructura full-bleed: la imagen ocupa TODA la cabecera con position
+        absolute + inset-0 + object-cover (sin contenedor que la recorte en
+        una caja), y el contenido de texto va en un contenedor aparte,
+        centrado y con ancho máximo, por encima de la imagen.
+      */}
+      <section className="relative isolate w-full overflow-hidden min-h-[380px] sm:min-h-[460px] lg:aspect-[2161/728] lg:min-h-0">
         <Image
-          src="/hero-v2.webp"
+          src="/hero-v3.webp"
           alt=""
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[68%_center] lg:object-[right_45%]"
+          className="object-cover object-[68%_center] sm:object-[72%_center] lg:object-center"
         />
-        {/* Velo blanco degradado para que el texto se lea */}
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-white/90 via-50% to-white/10 lg:bg-gradient-to-r lg:from-white/75 lg:via-white/70 lg:via-40% lg:to-white/0 lg:to-65%" />
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white to-transparent" />
+        {/* Velo para que el texto se lea siempre, sea cual sea el recorte */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/75 via-45% to-white/0 lg:via-white/80 lg:via-40%" />
 
-        <div className="container-lv relative grid min-h-[640px] items-start py-12 sm:min-h-[600px] lg:h-[38vw] lg:max-h-[680px] lg:min-h-[540px] lg:grid-cols-2 lg:items-center lg:py-0">
-          <div>
+        <div className="container-lv absolute inset-0 z-10 flex items-center">
+          <div className="max-w-lg">
             <p className="eyebrow mb-4">Maquinaria dental de segunda mano</p>
             <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
               Equipos que siguen creando <span className="text-brand">sonrisas</span>
@@ -59,8 +63,6 @@ export default async function HomePage() {
               </Link>
             </div>
           </div>
-          {/* Alt accesible del hero */}
-          <span className="sr-only">Fresadora dental Roland DWX-52D de segunda mano</span>
         </div>
       </section>
 
