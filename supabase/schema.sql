@@ -64,6 +64,7 @@ create table equipos (
   modelo        text,
   categoria_id  int references categorias(id),
   precio        numeric(10,2),
+  precio_anterior numeric(10,2),  -- si tiene valor, el equipo se muestra como "Rebajado"
   estado        estado_equipo not null default 'disponible',
   anio          int,
   horas_uso     int,
@@ -72,6 +73,7 @@ create table equipos (
   video_url     text,
   fotos         text[] not null default '{}',  -- rutas dentro del bucket "equipos"
   destacado     boolean not null default false,
+  nuevo         boolean not null default false,  -- etiqueta "Nuevo" (recién publicado / sin estrenar)
   visible       boolean not null default true,
   vendido_at    timestamptz,
   created_at    timestamptz not null default now(),
@@ -212,7 +214,7 @@ create policy "crear solicitud" on solicitudes for insert
   with check (estado = 'nuevo' and consentimiento = true);
 create policy "registrar evento" on eventos for insert with check (true);
 
--- Administrador (cualquier usuario autenticado; solo Mario tendrá cuenta)
+-- Administrador (cualquier usuario autenticado; solo Mario y Javi tendrán cuenta)
 create policy "admin categorias"  on categorias      for all to authenticated using (true) with check (true);
 create policy "admin equipos"     on equipos         for all to authenticated using (true) with check (true);
 create policy "admin solicitudes" on solicitudes     for all to authenticated using (true) with check (true);

@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Mail, Phone, ArrowRight } from "lucide-react";
 import { SITE_TAGLINE, whatsappUrl } from "@/lib/utils";
 import { TITULAR as T } from "@/lib/legal";
@@ -25,6 +28,9 @@ const CATEGORIAS = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <footer className="border-t border-line bg-surface">
       <div className="container-lv grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-12">

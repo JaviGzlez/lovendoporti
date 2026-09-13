@@ -1,24 +1,27 @@
-/**
- * Artículos del blog (modo demo, sin Supabase).
- * Cuando exista el panel privado, estos textos se migran a la tabla `articulos`
- * (mismo formato: título, extracto, contenido en Markdown, portada).
- */
-import type { Articulo } from "./types";
+-- Generado automáticamente por scripts/generar-seed.ts. No editar a mano.
+-- Carga el catálogo y el blog reales (los mismos que se ven en la web en modo demo).
 
-const daysAgo = (d: number) => new Date(Date.now() - d * 864e5).toISOString();
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('roland-dwx-52dci', 'Fresadora Roland DWX-52DCi con mueble y aspiración', 'Roland', 'DWX-52DCi', 1, 24900, null, 'disponible', null, null, 'Fresadora dental de 5 ejes con cambiador automático de discos. Incluye mueble con aspiración BOFA DentalPRO integrada.', 'Fresadora
+Mueble
+Aspiración BOFA DentalPRO
+Juego de fresas', array['/equipos/roland-dwx-52dci.webp'], true, false, true, '2026-09-12T09:28:47.514Z');
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('amann-girrbach-mikro-5x', 'Fresadora Amann Girrbach Ceramill Mikro 5X', 'Amann Girrbach', 'Ceramill Mikro 5X', 1, 13995, 15995, 'disponible', null, 5569, 'Fresadora de 5 ejes recién revisada, con spindle y motor cambiados. Lista para trabajar desde el primer día.', 'Software CAM
+Aspiración
+Compresor', array['/equipos/amann-girrbach-mikro-5x.webp'], true, false, true, '2026-09-10T09:28:47.514Z');
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('zirkonzahn-zirkonofen-600-v4', 'Horno de sinterizado Zirkonzahn Zirkonofen 600/V4', 'Zirkonzahn', 'Zirkonofen 600/V4', 3, 8500, null, 'disponible', null, 0, 'Horno de sinterizado de zirconio nuevo, sin uso.', null, array['/equipos/zirkonzahn-zirkonofen-600-v4.webp'], true, true, true, '2026-09-09T09:28:47.514Z');
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('zubler-horno-sinterizado', 'Horno de sinterizado Zubler', 'Zubler', 'Nova Lab', 3, 8995, null, 'disponible', null, 0, 'Horno de sinterizado nuevo, sin estrenar.', null, array['/equipos/zubler-horno-sinterizado.webp'], false, false, true, '2026-09-07T09:28:47.514Z');
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('mihm-vogt-tabeo-horno-metal', 'Horno de metal Mihm-Vogt Tabeo-2/M/Metal-120', 'Mihm-Vogt', 'Tabeo-2/M/Metal-120', 3, 3245, null, 'disponible', null, null, 'Horno de precalentamiento para metal en buen estado de uso.', null, array['/equipos/mihm-vogt-tabeo-horno-metal.webp'], false, false, true, '2026-09-05T09:28:47.514Z');
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('asiga-max-uv-385', 'Impresora 3D Asiga Max UV 385', 'Asiga', 'Max UV 385', 4, 4600, null, 'disponible', null, null, 'Impresora 3D DLP de alta precisión con fuente de luz UV 385 nm, compatible con una amplia gama de resinas dentales. Revisada y testada.', null, array['/equipos/asiga-max-uv-385.webp'], true, false, true, '2026-09-08T09:28:47.514Z');
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('labomed-microscopio', 'Microscopio Labomed con cámara digital', 'Labomed', 'Con cámara digital', 6, 1800, null, 'disponible', null, null, 'Microscopio profesional con cámara digital integrada e iluminación LED de alta potencia. Revisado y listo para trabajar.', null, array['/equipos/labomed-microscopio.webp'], false, false, true, '2026-09-06T09:28:47.514Z');
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('cattani-caja-insonorizacion', 'Caja de insonorización Cattani', 'Cattani', 'Caja de insonorización', 5, 1400, null, 'disponible', null, null, 'Caja de insonorización para compresor o aspiración Cattani.', null, array['/equipos/cattani-caja-insonorizacion.webp'], false, false, true, '2026-09-04T09:28:47.514Z');
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('mestra-dosificadora', 'Dosificadora Mestra', 'Mestra', 'Dosificadora', 7, 999, null, 'disponible', null, 0, 'Dosificadora de escayola Mestra nueva, sin estrenar.', null, array['/equipos/mestra-dosificadora.webp'], false, false, true, '2026-09-03T09:28:47.514Z');
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('zilfor-cabina-repasado', 'Cabina de repasado y pulido Zilfor con micromotor', 'Zilfor', 'Cabina de repasado', 7, 900, null, 'disponible', null, null, 'Cabina de repasado y pulido con aspiración, iluminación LED y micromotor de alta calidad. Equipo revisado.', null, array['/equipos/zilfor-cabina-repasado.webp'], false, false, true, '2026-09-02T09:28:47.514Z');
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('artex-cn-articulador', 'Articulador Artex CN', 'Amann Girrbach', 'Artex CN', 7, 275, null, 'disponible', null, null, 'Articulador semiajustable Artex CN en muy buen estado.', null, array['/equipos/artex-cn-articulador.webp'], false, false, true, '2026-09-01T09:28:47.514Z');
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('mestra-caja-repaso', 'Caja de repaso Mestra', 'Mestra', 'Caja de repaso', 7, 200, null, 'disponible', null, null, 'Caja de repaso con iluminación integrada y aspiración. Equipo revisado.', null, array['/equipos/mestra-caja-repaso.webp'], false, false, true, '2026-08-31T09:28:47.514Z');
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('oxtein-caja-cirugia', 'Caja de cirugía Oxtein', 'Oxtein', 'Caja de cirugía', 7, 175, null, 'disponible', null, null, 'Cajas de cirugía Oxtein. Precio por caja; disponibles tres unidades.', null, array['/equipos/oxtein-caja-cirugia.webp'], false, false, true, '2026-08-30T09:28:47.514Z');
+insert into equipos (slug, nombre, marca, modelo, categoria_id, precio, precio_anterior, estado, anio, horas_uso, descripcion, incluye, fotos, destacado, nuevo, visible, created_at) values ('ivoclar-lumamat-100', 'Ivoclar Vivadent Lumamat 100', 'Ivoclar Vivadent', 'Lumamat 100', 7, null, null, 'disponible', null, null, 'Unidad de fotopolimerización Ivoclar Vivadent Lumamat 100. Consultar precio.', null, array['/equipos/ivoclar-lumamat-100.webp'], false, false, true, '2026-08-29T09:28:47.514Z');
 
-type Seed = Omit<Articulo, "id" | "publicado" | "publicado_at"> & { dias: number };
-
-const SEED: Seed[] = [
-  {
-    slug: "comprar-fresadora-dental-segunda-mano-que-revisar",
-    titulo: "Comprar una fresadora dental de segunda mano: qué revisar antes de decidirte",
-    extracto:
-      "Horas de husillo, ejes, calibración, software y accesorios: la lista que uso yo antes de recomendar una fresadora usada.",
-    portada: "/equipos/roland-dwx-52dci.webp",
-    dias: 1,
-    contenido: `
-Una fresadora es, casi siempre, la inversión más grande de un laboratorio dental. Y también es el equipo donde más se nota la diferencia entre comprar bien y comprar mal de segunda mano. Llevo años viendo máquinas entrar y salir de laboratorios, y te puedo decir que una fresadora usada bien elegida trabaja igual que una nueva durante muchos años. Una mal elegida, en cambio, se convierte en un pozo de averías.
+insert into articulos (slug, titulo, extracto, contenido, portada, publicado, publicado_at) values ('comprar-fresadora-dental-segunda-mano-que-revisar', 'Comprar una fresadora dental de segunda mano: qué revisar antes de decidirte', 'Horas de husillo, ejes, calibración, software y accesorios: la lista que uso yo antes de recomendar una fresadora usada.', $lvpt$Una fresadora es, casi siempre, la inversión más grande de un laboratorio dental. Y también es el equipo donde más se nota la diferencia entre comprar bien y comprar mal de segunda mano. Llevo años viendo máquinas entrar y salir de laboratorios, y te puedo decir que una fresadora usada bien elegida trabaja igual que una nueva durante muchos años. Una mal elegida, en cambio, se convierte en un pozo de averías.
 
 Esta es la lista que reviso yo antes de recomendar cualquier fresadora que pasa por **Lo vendo por ti**.
 
@@ -66,18 +69,8 @@ El error más frecuente es dejarse llevar solo por el precio y no pedir el dato 
 
 ## Mi consejo
 
-No compres una fresadora usada solo por el precio ni solo por la marca. Compra la que tenga el historial claro, el husillo revisado y el software en regla. Y si tienes dudas, escríbeme: puedo revisar contigo cualquier equipo antes de que te decidas, sea nuestro o no. Puedes ver las [fresadoras que tenemos disponibles ahora mismo](/equipos?categoria=fresadoras) o [contarme qué buscas](/busco-un-equipo) y te aviso cuando entre una que encaje.
-`,
-  },
-  {
-    slug: "horno-de-sinterizado-segunda-mano-que-comprobar",
-    titulo: "Horno de sinterizado de segunda mano: qué comprobar para no llevarte sorpresas",
-    extracto:
-      "Resistencias, ciclos, termopar y cámara: los cuatro puntos que marcan si un horno de zirconio usado merece la pena.",
-    portada: "/equipos/zirkonzahn-zirkonofen-600-v4.webp",
-    dias: 6,
-    contenido: `
-El horno de sinterizado es uno de los equipos más agradecidos para comprar de segunda mano: tiene pocas piezas móviles, es robusto y, si está bien cuidado, dura muchísimos años. Pero precisamente por eso hay que saber mirar en el sitio correcto, porque lo que falla en un horno no se ve a simple vista.
+No compres una fresadora usada solo por el precio ni solo por la marca. Compra la que tenga el historial claro, el husillo revisado y el software en regla. Y si tienes dudas, escríbeme: puedo revisar contigo cualquier equipo antes de que te decidas, sea nuestro o no. Puedes ver las [fresadoras que tenemos disponibles ahora mismo](/equipos?categoria=fresadoras) o [contarme qué buscas](/busco-un-equipo) y te aviso cuando entre una que encaje.$lvpt$, '/equipos/roland-dwx-52dci.webp', true, '2026-09-12T09:28:47.514Z');
+insert into articulos (slug, titulo, extracto, contenido, portada, publicado, publicado_at) values ('horno-de-sinterizado-segunda-mano-que-comprobar', 'Horno de sinterizado de segunda mano: qué comprobar para no llevarte sorpresas', 'Resistencias, ciclos, termopar y cámara: los cuatro puntos que marcan si un horno de zirconio usado merece la pena.', $lvpt$El horno de sinterizado es uno de los equipos más agradecidos para comprar de segunda mano: tiene pocas piezas móviles, es robusto y, si está bien cuidado, dura muchísimos años. Pero precisamente por eso hay que saber mirar en el sitio correcto, porque lo que falla en un horno no se ve a simple vista.
 
 ## Las resistencias: el corazón del horno
 
@@ -123,18 +116,8 @@ El error más común es fijarse solo en el precio y olvidar el coste de un juego
 
 ## Resumen rápido
 
-Pregunta por los ciclos de las resistencias, pide una prueba de sinterizado, revisa la cámara con luz y confirma la alimentación eléctrica. Con esos cuatro puntos claros, un horno usado es una de las compras más seguras que puedes hacer para tu laboratorio. Y si quieres que lo revisemos juntos antes de decidir, [escríbeme por WhatsApp](/contacto).
-`,
-  },
-  {
-    slug: "impresora-3d-dental-segunda-mano-guia",
-    titulo: "Impresoras 3D dentales de segunda mano: guía para elegir bien",
-    extracto:
-      "Tecnología DLP o LCD, longitud de onda, horas de la fuente de luz y compatibilidad de resinas. Lo que importa de verdad.",
-    portada: "/equipos/asiga-max-uv-385.webp",
-    dias: 12,
-    contenido: `
-La impresión 3D se ha convertido en el flujo de trabajo estándar para modelos, férulas, guías quirúrgicas y provisionales. Y como la tecnología evoluciona rápido, muchos laboratorios y clínicas renuevan equipos que están en perfecto estado. Eso hace que el mercado de segunda mano sea especialmente interesante: puedes conseguir una impresora profesional por una fracción de su precio.
+Pregunta por los ciclos de las resistencias, pide una prueba de sinterizado, revisa la cámara con luz y confirma la alimentación eléctrica. Con esos cuatro puntos claros, un horno usado es una de las compras más seguras que puedes hacer para tu laboratorio. Y si quieres que lo revisemos juntos antes de decidir, [escríbeme por WhatsApp](/contacto).$lvpt$, '/equipos/zirkonzahn-zirkonofen-600-v4.webp', true, '2026-09-07T09:28:47.514Z');
+insert into articulos (slug, titulo, extracto, contenido, portada, publicado, publicado_at) values ('impresora-3d-dental-segunda-mano-guia', 'Impresoras 3D dentales de segunda mano: guía para elegir bien', 'Tecnología DLP o LCD, longitud de onda, horas de la fuente de luz y compatibilidad de resinas. Lo que importa de verdad.', $lvpt$La impresión 3D se ha convertido en el flujo de trabajo estándar para modelos, férulas, guías quirúrgicas y provisionales. Y como la tecnología evoluciona rápido, muchos laboratorios y clínicas renuevan equipos que están en perfecto estado. Eso hace que el mercado de segunda mano sea especialmente interesante: puedes conseguir una impresora profesional por una fracción de su precio.
 
 Pero no todas las impresoras son iguales, y hay detalles que marcan la diferencia.
 
@@ -186,18 +169,8 @@ El error más habitual es no comprobar la longitud de onda antes de comprar y lu
 
 ## Nuestra recomendación
 
-Para un laboratorio que empieza en digital, una impresora DLP profesional de segunda mano con su lavado y postcurado es la forma más rentable de dar el salto. Puedes ver las [impresoras 3D que tenemos disponibles](/equipos?categoria=impresion-3d), y si tienes dudas sobre resinas o compatibilidades, [pregúntame sin compromiso](/contacto).
-`,
-  },
-  {
-    slug: "cuando-vender-maquinaria-dental",
-    titulo: "¿Cuándo es el mejor momento para vender tu maquinaria dental?",
-    extracto:
-      "Un equipo parado pierde valor cada mes. Te cuento cuándo conviene venderlo, cómo prepararlo y qué documentación tener a mano.",
-    portada: "/hero-v2.webp",
-    dias: 18,
-    contenido: `
-En casi todos los laboratorios y clínicas hay un equipo que ya no se usa: la fresadora que se sustituyó por otra más grande, el escáner de la generación anterior, el horno que se quedó pequeño. Y en la mayoría de los casos ese equipo sigue ahí, ocupando sitio, porque venderlo da pereza o porque "ya lo haré".
+Para un laboratorio que empieza en digital, una impresora DLP profesional de segunda mano con su lavado y postcurado es la forma más rentable de dar el salto. Puedes ver las [impresoras 3D que tenemos disponibles](/equipos?categoria=impresion-3d), y si tienes dudas sobre resinas o compatibilidades, [pregúntame sin compromiso](/contacto).$lvpt$, '/equipos/asiga-max-uv-385.webp', true, '2026-09-01T09:28:47.514Z');
+insert into articulos (slug, titulo, extracto, contenido, portada, publicado, publicado_at) values ('cuando-vender-maquinaria-dental', '¿Cuándo es el mejor momento para vender tu maquinaria dental?', 'Un equipo parado pierde valor cada mes. Te cuento cuándo conviene venderlo, cómo prepararlo y qué documentación tener a mano.', $lvpt$En casi todos los laboratorios y clínicas hay un equipo que ya no se usa: la fresadora que se sustituyó por otra más grande, el escáner de la generación anterior, el horno que se quedó pequeño. Y en la mayoría de los casos ese equipo sigue ahí, ocupando sitio, porque venderlo da pereza o porque "ya lo haré".
 
 La realidad es que un equipo parado **pierde valor cada mes que pasa**, y no solo por la antigüedad: los modelos se renuevan, las licencias caducan y las piezas se deterioran sin uso. Te cuento cuándo conviene mover ficha y cómo hacerlo bien.
 
@@ -247,18 +220,8 @@ Nuestro trabajo es exactamente el que da pereza: revisar la información, prepar
 
 ## En resumen
 
-Si tienes un equipo que no usas, no esperes a que "salga la ocasión". Prepáralo, documéntalo y ponlo en el mercado cuanto antes. Y si prefieres que lo hagamos por ti, ya sabes dónde estamos.
-`,
-  },
-  {
-    slug: "ventajas-maquinaria-dental-segunda-mano",
-    titulo: "7 ventajas de comprar maquinaria dental de segunda mano (y 2 riesgos que debes conocer)",
-    extracto:
-      "Ahorro, disponibilidad inmediata, tecnología probada, acceso a gamas altas... y también lo que puede salir mal si compras sin garantías.",
-    portada: "/equipos/amann-girrbach-mikro-5x.webp",
-    dias: 25,
-    contenido: `
-Cada vez más laboratorios y clínicas montan o amplían su equipamiento con maquinaria de segunda mano. No es una moda: es una decisión económica sensata en un sector donde la tecnología es cara y se renueva rápido. Pero como en cualquier compra de ocasión, hay que saber lo que se hace. Estas son las ventajas reales, y también los riesgos.
+Si tienes un equipo que no usas, no esperes a que "salga la ocasión". Prepáralo, documéntalo y ponlo en el mercado cuanto antes. Y si prefieres que lo hagamos por ti, ya sabes dónde estamos.$lvpt$, '/hero-v2.webp', true, '2026-08-26T09:28:47.514Z');
+insert into articulos (slug, titulo, extracto, contenido, portada, publicado, publicado_at) values ('ventajas-maquinaria-dental-segunda-mano', '7 ventajas de comprar maquinaria dental de segunda mano (y 2 riesgos que debes conocer)', 'Ahorro, disponibilidad inmediata, tecnología probada, acceso a gamas altas... y también lo que puede salir mal si compras sin garantías.', $lvpt$Cada vez más laboratorios y clínicas montan o amplían su equipamiento con maquinaria de segunda mano. No es una moda: es una decisión económica sensata en un sector donde la tecnología es cara y se renueva rápido. Pero como en cualquier compra de ocasión, hay que saber lo que se hace. Estas son las ventajas reales, y también los riesgos.
 
 ## Ventaja 1: el ahorro es enorme
 
@@ -306,18 +269,8 @@ Es la pregunta que más miedo da, y es razonable. Por eso en Lo vendo por ti cad
 
 ## Entonces, ¿segunda mano sí o no?
 
-Sí, siempre que compres con información, con la posibilidad de preguntar y con alguien que responda al otro lado. Con eso, la segunda mano no es "la opción barata": es la opción inteligente. Echa un vistazo a [los equipos que tenemos disponibles](/equipos) o [cuéntame qué necesitas](/busco-un-equipo).
-`,
-  },
-  {
-    slug: "como-se-valora-un-equipo-dental-usado",
-    titulo: "Cómo se valora un equipo dental usado: los factores que marcan el precio",
-    extracto:
-      "Antigüedad, horas, mantenimiento, accesorios, software y demanda. Así calculamos el precio justo de cada equipo.",
-    portada: "/equipos/labomed-microscopio.webp",
-    dias: 32,
-    contenido: `
-"¿Cuánto vale mi equipo?" es la pregunta que más me hacen. Y la respuesta honesta es: depende. Pero no depende de cualquier cosa; depende de unos pocos factores concretos que se pueden analizar. Te explico cómo lo hacemos en Lo vendo por ti para llegar a un precio que sea justo para quien vende y atractivo para quien compra.
+Sí, siempre que compres con información, con la posibilidad de preguntar y con alguien que responda al otro lado. Con eso, la segunda mano no es "la opción barata": es la opción inteligente. Echa un vistazo a [los equipos que tenemos disponibles](/equipos) o [cuéntame qué necesitas](/busco-un-equipo).$lvpt$, '/equipos/amann-girrbach-mikro-5x.webp', true, '2026-08-19T09:28:47.514Z');
+insert into articulos (slug, titulo, extracto, contenido, portada, publicado, publicado_at) values ('como-se-valora-un-equipo-dental-usado', 'Cómo se valora un equipo dental usado: los factores que marcan el precio', 'Antigüedad, horas, mantenimiento, accesorios, software y demanda. Así calculamos el precio justo de cada equipo.', $lvpt$"¿Cuánto vale mi equipo?" es la pregunta que más me hacen. Y la respuesta honesta es: depende. Pero no depende de cualquier cosa; depende de unos pocos factores concretos que se pueden analizar. Te explico cómo lo hacemos en Lo vendo por ti para llegar a un precio que sea justo para quien vende y atractivo para quien compra.
 
 ## 1. El precio de referencia: cuánto cuesta nuevo hoy
 
@@ -369,18 +322,4 @@ Una fresadora que costó 30.000 euros hace 4 años, con el husillo revisado, man
 
 ## ¿Quieres saber cuánto vale el tuyo?
 
-Cuéntame qué equipo es, de qué año, cuántas horas tiene y qué incluye, y te doy una valoración orientativa sin compromiso. Puedes hacerlo desde [Vender mi equipo](/vender-mi-equipo) o directamente [por WhatsApp](/contacto).
-`,
-  },
-];
-
-export const articulosDemo: Articulo[] = SEED.map((s, i) => ({
-  id: `a${i + 1}`,
-  slug: s.slug,
-  titulo: s.titulo,
-  extracto: s.extracto,
-  contenido: (s.contenido ?? "").trim(),
-  portada: s.portada,
-  publicado: true,
-  publicado_at: daysAgo(s.dias),
-}));
+Cuéntame qué equipo es, de qué año, cuántas horas tiene y qué incluye, y te doy una valoración orientativa sin compromiso. Puedes hacerlo desde [Vender mi equipo](/vender-mi-equipo) o directamente [por WhatsApp](/contacto).$lvpt$, '/equipos/labomed-microscopio.webp', true, '2026-08-12T09:28:47.514Z');

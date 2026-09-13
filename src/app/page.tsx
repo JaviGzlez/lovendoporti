@@ -103,7 +103,7 @@ export default async function HomePage() {
       <section className="bg-brand-light/60">
         <div className="container-lv grid gap-8 py-10 sm:grid-cols-3 lg:grid-cols-4 lg:items-center">
           <Feature icon={ShieldCheck} title="Trato directo" text="y profesional" />
-          <Feature icon={Settings2} title="Equipos revisados" text="y con información real" />
+          <Feature icon={Settings2} title="Información real" text="de cada equipo" />
           <Feature icon={HeartHandshake} title="Te acompañamos" text="en todo el proceso" />
           <p className="hidden rotate-[-4deg] font-hand text-3xl text-ink/80 lg:block lg:text-right">
             Más que maquinaria,

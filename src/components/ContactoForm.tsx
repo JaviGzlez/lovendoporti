@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useRef } from "react";
 import WhatsAppIcon from "./WhatsAppIcon";
 import { enviarContacto, type ActionResult } from "@/lib/actions";
 import ConsentCheckbox from "./ConsentCheckbox";
@@ -9,9 +9,15 @@ import SubmitButton from "./SubmitButton";
 
 export default function ContactoForm() {
   const [state, action] = useActionState<ActionResult | null, FormData>(enviarContacto, null);
+  // Evita abrir WhatsApp dos veces para el mismo resultado (lo que provoca que
+  // el mensaje aparezca duplicado en la conversación).
+  const abiertoPara = useRef<ActionResult | null>(null);
 
   useEffect(() => {
-    if (state?.ok && state.whatsapp) window.open(state.whatsapp, "_blank", "noopener");
+    if (state?.ok && state.whatsapp && abiertoPara.current !== state) {
+      abiertoPara.current = state;
+      window.open(state.whatsapp, "_blank", "noopener");
+    }
   }, [state]);
 
   if (state?.ok) {

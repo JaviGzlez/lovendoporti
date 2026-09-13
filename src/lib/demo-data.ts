@@ -31,6 +31,8 @@ type Seed = {
   horas?: number;
   estado?: Equipo["estado"];
   destacado?: boolean;
+  nuevo?: boolean;
+  precioAnterior?: number;
   dias: number;
 };
 
@@ -54,6 +56,7 @@ const SEED: Seed[] = [
     modelo: "Ceramill Mikro 5X",
     cat: 1,
     precio: 13995,
+    precioAnterior: 15995,
     horas: 5569,
     desc: "Fresadora de 5 ejes recién revisada, con spindle y motor cambiados. Lista para trabajar desde el primer día.",
     incluye: "Software CAM\nAspiración\nCompresor",
@@ -70,6 +73,7 @@ const SEED: Seed[] = [
     horas: 0,
     desc: "Horno de sinterizado de zirconio nuevo, sin uso.",
     destacado: true,
+    nuevo: true,
     dias: 4,
   },
   {
@@ -196,6 +200,7 @@ export const demoEquipos: Equipo[] = SEED.map((s, i) => ({
   modelo: s.modelo,
   categoria_id: s.cat,
   precio: s.precio,
+  precio_anterior: s.precioAnterior ?? null,
   estado: s.estado ?? "disponible",
   anio: s.anio ?? null,
   horas_uso: s.horas ?? null,
@@ -204,6 +209,7 @@ export const demoEquipos: Equipo[] = SEED.map((s, i) => ({
   video_url: null,
   fotos: [`/equipos/${s.slug}.webp`],
   destacado: s.destacado ?? false,
+  nuevo: s.nuevo ?? false,
   visible: true,
   vendido_at: null,
   created_at: daysAgo(s.dias),

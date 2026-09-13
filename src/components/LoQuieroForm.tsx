@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { Search } from "lucide-react";
 import WhatsAppIcon from "./WhatsAppIcon";
 import { loQuiero, type ActionResult } from "@/lib/actions";
@@ -19,9 +19,15 @@ export default function LoQuieroForm({ equipo }: { equipo: Equipo }) {
   const vendido = equipo.estado === "vendido";
   const [open, setOpen] = useState(false);
   const [state, action] = useActionState<ActionResult | null, FormData>(loQuiero, null);
+  // Evita abrir WhatsApp dos veces para el mismo resultado (doble clic, doble
+  // ejecución del efecto, etc.), que es lo que hace que el mensaje aparezca duplicado.
+  const abiertoPara = useRef<ActionResult | null>(null);
 
   useEffect(() => {
-    if (state?.ok && state.whatsapp) window.open(state.whatsapp, "_blank", "noopener");
+    if (state?.ok && state.whatsapp && abiertoPara.current !== state) {
+      abiertoPara.current = state;
+      window.open(state.whatsapp, "_blank", "noopener");
+    }
   }, [state]);
 
   if (state?.ok) {

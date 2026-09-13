@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const PASOS = [
   { icon: ClipboardCheck, title: "Nos cuentas qué tienes", text: "Rellena el formulario con los datos del equipo y sube unas fotos." },
-  { icon: Camera, title: "Lo revisamos y publicamos", text: "Mario revisa la información, prepara la ficha y la publica en el catálogo." },
+  { icon: Camera, title: "Preparamos la ficha", text: "Mario organiza la información y las fotos que nos envías, y la publica en el catálogo." },
   { icon: Handshake, title: "Te acompañamos en la venta", text: "Gestionamos los contactos y te ayudamos hasta cerrar la operación." },
 ];
 
@@ -26,7 +26,7 @@ export default async function VenderPage() {
           <p className="eyebrow mb-2">¿Tienes un equipo que ya no utilizas?</p>
           <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Vender mi equipo</h1>
           <p className="mt-3 text-muted">
-            Tú no publicas nada: nos envías la información, la revisamos y nosotros nos encargamos de todo lo demás.
+            Tú no publicas nada: nos envías la información y nosotros nos encargamos de todo lo demás.
           </p>
           <ol className="mt-8 space-y-6">
             {PASOS.map((p, i) => (

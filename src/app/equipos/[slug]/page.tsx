@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronRight, Check, Calendar, Clock, Tag } from "lucide-react";
 import { fotoUrl, getEquipoBySlug, getEquiposSimilares, isDemo } from "@/lib/data";
-import { formatPrecio, SITE_URL } from "@/lib/utils";
+import { cn, formatPrecio, SITE_URL } from "@/lib/utils";
 import EstadoBadge from "@/components/EstadoBadge";
 import Galeria from "@/components/Galeria";
 import LoQuieroForm from "@/components/LoQuieroForm";
@@ -38,6 +38,7 @@ export default async function EquipoPage({ params }: PageProps<"/equipos/[slug]"
   const fotos = equipo.fotos.map((f) => fotoUrl(f)).filter((u): u is string => !!u);
   const incluye = (equipo.incluye ?? "").split("\n").map((s) => s.trim()).filter(Boolean);
   const vendido = equipo.estado === "vendido";
+  const rebajado = equipo.precio_anterior != null && equipo.precio_anterior > (equipo.precio ?? 0);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -98,7 +99,15 @@ export default async function EquipoPage({ params }: PageProps<"/equipos/[slug]"
         <div className="lg:col-span-2">
           <div className="card sticky top-24 p-6 sm:p-8">
             <div className="flex items-center justify-between gap-3">
-              <EstadoBadge estado={equipo.estado} />
+              <div className="flex items-center gap-2">
+                <EstadoBadge estado={equipo.estado} />
+                {equipo.nuevo && (
+                  <span className="rounded-full bg-brand px-3 py-1 text-xs font-semibold text-white">Nuevo</span>
+                )}
+                {rebajado && (
+                  <span className="rounded-full bg-red-600 px-3 py-1 text-xs font-semibold text-white">Rebajado</span>
+                )}
+              </div>
               <span className="text-xs font-medium text-muted">Ref. {equipo.referencia}</span>
             </div>
             <h1 className="mt-4 text-2xl font-bold tracking-tight sm:text-3xl">{equipo.nombre}</h1>
@@ -107,9 +116,14 @@ export default async function EquipoPage({ params }: PageProps<"/equipos/[slug]"
                 {[equipo.marca, equipo.modelo].filter(Boolean).join(" · ")}
               </p>
             )}
-            <p className="mt-5 text-3xl font-extrabold">
-              {formatPrecio(equipo.precio)}
-              {equipo.precio != null && <span className="ml-2 text-sm font-normal text-muted">IVA no incluido</span>}
+            <p className="mt-5 flex flex-wrap items-baseline gap-2">
+              {rebajado && (
+                <span className="text-lg text-muted line-through">{formatPrecio(equipo.precio_anterior)}</span>
+              )}
+              <span className={cn("text-3xl font-extrabold", rebajado && "text-red-600")}>
+                {formatPrecio(equipo.precio)}
+              </span>
+              {equipo.precio != null && <span className="text-sm font-normal text-muted">IVA no incluido</span>}
             </p>
 
             <dl className="mt-6 grid grid-cols-2 gap-3 text-sm">

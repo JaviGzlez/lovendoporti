@@ -34,9 +34,9 @@ export default function QuienSoyPage() {
               usarse, y muchos profesionales que la necesitaban pero no sabían dónde encontrarla con garantías.
             </p>
             <p>
-              Así nació <strong>Lo vendo por ti</strong>: un lugar donde cada equipo se revisa, se publica con
-              información real y se acompaña durante toda la operación. Sin intermediarios anónimos, con trato
-              directo y cercano.
+              Así nació <strong>Lo vendo por ti</strong>: un lugar donde cada equipo se publica con información
+              real y se acompaña durante toda la operación. Sin intermediarios anónimos, con trato directo y
+              cercano.
             </p>
             <p>
               Si tienes un equipo que ya no utilizas, o buscas uno concreto, hablamos y lo vemos juntos.

@@ -27,6 +27,13 @@ export function whatsappUrl(mensaje: string) {
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
 }
 
+/** Enlace de WhatsApp a un teléfono cualquiera (uso interno del panel: contactar a quien rellenó un formulario). */
+export function whatsappUrlA(telefono: string, mensaje: string) {
+  const digitos = telefono.replace(/\D/g, "");
+  const conPrefijo = digitos.startsWith("34") || digitos.length > 9 ? digitos : `34${digitos}`;
+  return `https://wa.me/${conPrefijo}?text=${encodeURIComponent(mensaje)}`;
+}
+
 /**
  * URL pública del sitio. Orden: NEXT_PUBLIC_SITE_URL -> URL del despliegue en Vercel -> localhost.
  * Tolera la variable vacía o sin protocolo.
