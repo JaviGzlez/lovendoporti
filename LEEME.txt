@@ -1,71 +1,38 @@
-LO VENDO POR TI — Fotos fáciles + arreglo de "Actividad"
-============================================================
+LO VENDO POR TI — Actividad con nombres, colores y más detalle
+=================================================================
 
 QUÉ TRAE ESTE ZIP
 ------------------
-1. Subir fotos de verdad desde el panel (equipos y portada del blog), sin tener que
-   escribir rutas a mano. Se suben desde el móvil o el ordenador y se ajustan solas
-   (se comprimen y se convierten a un formato ligero).
-2. Ampliado el historial de "Actividad" para que también recoja los cambios en
-   solicitudes (cambiar el estado de un cliente, añadir una nota) — antes solo
-   recogía equipos y artículos del blog.
-3. Un aviso en los logs si alguna vez el registro de actividad falla por dentro,
-   para poder diagnosticarlo más rápido en el futuro.
+- En "Actividad" ahora sale "Javi" (en azul claro) o "Mario" (en rojo) en vez del
+  email, para verlo de un vistazo.
+- Cada línea trae más detalle de lo que se hizo en concreto, por ejemplo:
+    Javi editó el equipo «Fresadora Roland DWX-52DCi»
+      · Precio: 24.900 € → 22.900 €
+      · Marcado como destacado
+    Mario editó la solicitud de «Ana López»
+      · Estado → contactado
+- Sale la hora exacta además de la fecha.
 
-SOBRE POR QUÉ NO TE SALÍA LO DE MARIO EN "ACTIVIDAD"
--------------------------------------------------------
-Lo más probable es una de estas dos cosas (o las dos):
-
-  a) Mario estaba usando sobre todo la sección de "Solicitudes" (cambiar estados,
-     añadir notas), y esa parte todavía no se registraba en el historial — con este
-     zip ya se registra.
-
-  b) El script de la tabla de actividad (migration-002-admin-eventos.sql) no llegó
-     a ejecutarse en Supabase, o dio algún error que pasó desapercibido. Si es así,
-     NINGUNA actividad se registra (ni la tuya ni la de Mario), aunque el resto del
-     panel funcione con normalidad.
-
-Para descartar la opción (b): entra en Supabase → Table Editor → busca en la lista
-de tablas de la izquierda si aparece "admin_eventos". Si no aparece, vuelve a hacer
-el paso de la migración (SQL Editor → pega el contenido de
-supabase/migration-002-admin-eventos.sql del zip anterior → Run). Si ya aparece,
-no hace falta tocar nada de la base de datos esta vez, con instalar este zip basta.
+No hace falta tocar nada en Supabase para este zip — solo instalar los archivos.
 
 PASO 1: INSTALAR LOS ARCHIVOS
 ------------------------------
 Copia estos archivos a tu proyecto local, sustituyendo los que ya existen:
 
-  package.json                                   (modificado — añade "sharp")
-  src/lib/types.ts                               (modificado)
+  src/lib/utils.ts                               (modificado)
   src/lib/admin/actions.ts                       (modificado)
-  src/lib/admin/storage.ts                       (NUEVO)
-  src/components/admin/EquipoNuevoForm.tsx       (modificado)
-  src/components/admin/EquipoEditForm.tsx        (modificado)
-  src/components/admin/ArticuloForm.tsx          (modificado)
   src/app/admin/(panel)/actividad/page.tsx       (modificado)
 
-No hay que tocar nada más en Supabase para este zip (ninguna tabla nueva).
-
-PASO 2: INSTALAR LA LIBRERÍA NUEVA Y SUBIR
----------------------------------------------
-En tu terminal, dentro de la carpeta del proyecto:
-
-  npm install
-
-Después, como siempre: git add, git commit, git push. Vercel instalará todo solo
-al desplegar.
+PASO 2: SUBIR LOS CAMBIOS
+----------------------------
+git add, git commit, git push, como siempre.
 
 PASO 3: PROBAR
 ----------------
-- Entra en un equipo (o crea uno nuevo) y usa el nuevo selector de fotos para subir
-  una imagen directamente desde el móvil o el ordenador. Debería aparecer como
-  miniatura en la ficha de edición, con la opción de "Quitar" si te equivocas.
-- Haz lo mismo con la portada de un artículo del blog.
-- Cambia el estado de una solicitud o añade una nota, y comprueba que ahora sí
-  aparece en "Actividad".
+Entra en Actividad y comprueba que ahora aparecéis como "Javi" / "Mario" con su
+color, y que al lado de cada acción sale el detalle (qué precio cambió, si se
+marcó como destacado, qué nota se añadió a una solicitud, etc.).
 
-Si al subir una foto te sale un error de "no se pudo leer la foto", casi seguro es
-un iPhone guardando en formato HEIC. La solución más rápida: compártela por
-WhatsApp contigo mismo (WhatsApp la convierte a JPG solo) y sube esa copia; o
-cambia el ajuste del móvil en Ajustes → Cámara → Formatos → «Más compatible» para
-que las fotos nuevas se guarden ya en JPG.
+Nota: como la tabla "admin_eventos" se creó hace poco, solo aparecerán aquí las
+acciones hechas DESPUÉS de crearla — lo de antes no queda registrado
+retroactivamente, es normal.

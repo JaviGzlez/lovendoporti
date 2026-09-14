@@ -3,9 +3,10 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createAdminSupabase, createServerSupabase, supabaseConfigured } from "@/lib/supabase/server";
-import { slugify } from "@/lib/utils";
+import { slugify, formatPrecio } from "@/lib/utils";
 import { subirFotos, archivosDe } from "@/lib/admin/storage";
 import type { EstadoEquipo, EstadoSolicitud, AccionEvento, EntidadEvento } from "@/lib/types";
+import { ESTADO_LABEL } from "@/lib/types";
 
 export interface AdminActionResult {
   ok: boolean;
@@ -107,7 +108,7 @@ export async function actualizarEquipo(_: AdminActionResult | null, fd: FormData
   const supabase = await createServerSupabase();
   const { data: actual, error: errorLectura } = await supabase
     .from("equipos")
-    .select("precio, precio_anterior, estado, vendido_at, slug, fotos")
+    .select("precio, precio_anterior, estado, vendido_at, slug, fotos, destacado, nuevo, visible")
     .eq("id", id)
     .maybeSingle();
   if (errorLectura || !actual) return { ok: false, error: "No se encontró el equipo." };
@@ -170,11 +171,20 @@ export async function actualizarEquipo(_: AdminActionResult | null, fd: FormData
     });
   }
 
-  const cambioPrecio =
-    precioNuevo != null && actual.precio != null && precioNuevo !== actual.precio
-      ? `Precio: ${actual.precio} € → ${precioNuevo} €`
-      : null;
-  await registrarEvento(supabase, "editar", "equipo", id, nombre, cambioPrecio);
+  const cambios: string[] = [];
+  if (precioNuevo !== actual.precio) {
+    cambios.push(`Precio: ${formatPrecio(actual.precio)} → ${formatPrecio(precioNuevo)}`);
+  }
+  if (estado !== actual.estado) {
+    cambios.push(`Estado: ${ESTADO_LABEL[actual.estado as EstadoEquipo]} → ${ESTADO_LABEL[estado]}`);
+  }
+  if (destacado !== actual.destacado) cambios.push(destacado ? "Marcado como destacado" : "Quitado de destacados");
+  if (nuevo !== actual.nuevo) cambios.push(nuevo ? "Etiqueta «Nuevo» añadida" : "Etiqueta «Nuevo» quitada");
+  if (visible !== actual.visible) cambios.push(visible ? "Vuelto a visible en la web" : "Ocultado de la web");
+  if (fotosQuitar.length) cambios.push(`${fotosQuitar.length} foto(s) quitada(s)`);
+  if (fotosNuevas.length) cambios.push(`${fotosNuevas.length} foto(s) añadida(s)`);
+
+  await registrarEvento(supabase, "editar", "equipo", id, nombre, cambios.join(" · ") || null);
 
   revalidatePath("/admin/equipos");
   revalidatePath("/equipos");
@@ -246,7 +256,14 @@ export async function crearEquipo(_: AdminActionResult | null, fd: FormData): Pr
     return { ok: false, error: "No se pudo crear el equipo." };
   }
 
-  await registrarEvento(supabase, "crear", "equipo", nuevo.id, nombre);
+  const detalleCreacion = [
+    [String(fd.get("marca") ?? "").trim(), String(fd.get("modelo") ?? "").trim()].filter(Boolean).join(" "),
+    `Precio: ${formatPrecio(precio)}`,
+    fotos.length ? `${fotos.length} foto(s)` : "sin fotos",
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  await registrarEvento(supabase, "crear", "equipo", nuevo.id, nombre, detalleCreacion);
 
   revalidatePath("/admin/equipos");
   revalidatePath("/equipos");
@@ -317,7 +334,7 @@ export async function crearArticulo(_: AdminActionResult | null, fd: FormData): 
     return { ok: false, error: "No se pudo crear el artículo." };
   }
 
-  await registrarEvento(supabase, "crear", "articulo", nuevo.id, titulo);
+  await registrarEvento(supabase, "crear", "articulo", nuevo.id, titulo, publicado ? "Publicado" : "Guardado como borrador");
 
   revalidatePath("/admin/blog");
   revalidatePath("/blog");
@@ -339,7 +356,7 @@ export async function actualizarArticulo(_: AdminActionResult | null, fd: FormDa
 
   const { data: actual } = await supabase
     .from("articulos")
-    .select("publicado_at, slug")
+    .select("publicado_at, slug, publicado, titulo")
     .eq("id", id)
     .maybeSingle();
 
@@ -370,7 +387,11 @@ export async function actualizarArticulo(_: AdminActionResult | null, fd: FormDa
     return { ok: false, error: "No se pudo guardar." };
   }
 
-  await registrarEvento(supabase, "editar", "articulo", id, titulo);
+  const cambiosArticulo: string[] = [];
+  if (actual?.titulo && actual.titulo !== titulo) cambiosArticulo.push(`Título: "${actual.titulo}" → "${titulo}"`);
+  if (actual && actual.publicado !== publicado) cambiosArticulo.push(publicado ? "Publicado" : "Pasado a borrador");
+  if (archivoPortada) cambiosArticulo.push("Portada cambiada");
+  await registrarEvento(supabase, "editar", "articulo", id, titulo, cambiosArticulo.join(" · ") || null);
 
   revalidatePath("/admin/blog");
   revalidatePath("/blog");

@@ -4,7 +4,7 @@ import { ShieldCheck } from "lucide-react";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { esAdminPrincipal } from "@/lib/admin/auth";
 import { getEventosAdmin } from "@/lib/admin/data";
-import { formatFecha } from "@/lib/utils";
+import { formatFechaHora, cn } from "@/lib/utils";
 
 export const metadata: Metadata = { title: "Actividad · Área privada" };
 export const dynamic = "force-dynamic";
@@ -36,17 +36,36 @@ export default async function ActividadPage() {
         <p className="card p-6 text-sm text-muted">Todavía no hay actividad registrada.</p>
       ) : (
         <ul className="space-y-2">
-          {eventos.map((e) => (
-            <li key={e.id} className="card flex flex-wrap items-center justify-between gap-2 p-4 text-sm">
-              <span>
-                <span className="font-medium">{e.actor_email}</span> {ACCION_LABEL[e.accion] ?? e.accion}{" "}
-                {ENTIDAD_LABEL[e.entidad] ?? e.entidad}{" "}
-                <span className="font-medium">«{e.entidad_nombre ?? "—"}»</span>
-                {e.detalle && <span className="text-muted"> — {e.detalle}</span>}
-              </span>
-              <span className="whitespace-nowrap text-xs text-muted">{formatFecha(e.created_at)}</span>
-            </li>
-          ))}
+          {eventos.map((e) => {
+            const esJavi = esAdminPrincipal(e.actor_email);
+            const detalles = (e.detalle ?? "").split(" · ").filter(Boolean);
+            return (
+              <li key={e.id} className="card p-4 text-sm">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <p>
+                    <span
+                      className={cn(
+                        "rounded-full px-2.5 py-0.5 text-xs font-semibold",
+                        esJavi ? "bg-sky-100 text-sky-700" : "bg-red-100 text-red-700"
+                      )}
+                    >
+                      {esJavi ? "Javi" : "Mario"}
+                    </span>{" "}
+                    {ACCION_LABEL[e.accion] ?? e.accion} {ENTIDAD_LABEL[e.entidad] ?? e.entidad}{" "}
+                    <span className="font-medium">«{e.entidad_nombre ?? "—"}»</span>
+                  </p>
+                  <span className="whitespace-nowrap text-xs text-muted">{formatFechaHora(e.created_at)}</span>
+                </div>
+                {detalles.length > 0 && (
+                  <ul className="mt-2 list-disc space-y-0.5 pl-5 text-xs text-muted">
+                    {detalles.map((d, i) => (
+                      <li key={i}>{d}</li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>

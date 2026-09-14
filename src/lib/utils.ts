@@ -12,6 +12,17 @@ export function formatFecha(iso: string | null | undefined) {
   );
 }
 
+/** Fecha + hora corta, para el historial de actividad. */
+export function formatFechaHora(iso: string | null | undefined) {
+  if (!iso) return "";
+  return new Intl.DateTimeFormat("es-ES", {
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(iso));
+}
+
 export function slugify(text: string) {
   return text
     .toLowerCase()
