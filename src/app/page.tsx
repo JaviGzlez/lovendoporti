@@ -66,6 +66,16 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* OPORTUNIDAD ESPECIAL: local en venta (quitar este bloque cuando se venda) */}
+      <Link
+        href="/inmueble-en-venta"
+        className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-ink px-4 py-3 text-center text-sm font-medium text-white transition hover:bg-ink/90"
+      >
+        <span className="rounded-full bg-brand px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide">Oportunidad</span>
+        <span>Local comercial en venta en El Puerto de Santa María — 274 m², 8 gabinetes</span>
+        <span className="underline underline-offset-2">Ver detalles →</span>
+      </Link>
+
       {/* CATEGORÍAS */}
       <section className="border-y border-line bg-white">
         <div className="container-lv flex gap-2 overflow-x-auto py-6 [scrollbar-width:none]">
@@ -177,7 +187,8 @@ export default async function HomePage() {
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Hola, soy Mario Zarzuela</h2>
               <p className="mt-4 max-w-xl text-muted">
                 Llevo años en el sector dental y creé Lo vendo por ti para ayudar a profesionales como tú a comprar y
-                vender equipos de forma sencilla, segura y cercana. Te acompaño en todo el proceso.
+                vender equipos de forma sencilla, segura y cercana. Cada equipo lo reviso yo y te acompaño en todo el
+                proceso.
               </p>
               <p className="mt-4 font-hand text-2xl text-brand">Más que maquinaria, personas</p>
               <Link href="/quien-soy" className="btn-outline mt-6 bg-white">

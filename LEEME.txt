@@ -1,27 +1,32 @@
-LO VENDO POR TI — Actividad con nombres, colores y más detalle
-=================================================================
+LO VENDO POR TI — Página "Local en venta" (Calle Aurora)
+============================================================
 
 QUÉ TRAE ESTE ZIP
 ------------------
-- En "Actividad" ahora sale "Javi" (en azul claro) o "Mario" (en rojo) en vez del
-  email, para verlo de un vistazo.
-- Cada línea trae más detalle de lo que se hizo en concreto, por ejemplo:
-    Javi editó el equipo «Fresadora Roland DWX-52DCi»
-      · Precio: 24.900 € → 22.900 €
-      · Marcado como destacado
-    Mario editó la solicitud de «Ana López»
-      · Estado → contactado
-- Sale la hora exacta además de la fecha.
-
-No hace falta tocar nada en Supabase para este zip — solo instalar los archivos.
+- Una página nueva en la web: lovendoportidental.es/inmueble-en-venta
+  Con el texto que me pasaste de redes, los datos del dossier (274 m² útiles,
+  8 gabinetes, patio de 22 m², 585.000 €), una galería de fotos del local, el
+  plano, y dos botones: "Escribir a Mario por WhatsApp" (con un mensaje ya
+  escrito sobre este local en concreto) y "Descargar dossier completo (PDF)".
+- Un aviso destacado en la home (justo debajo de la cabecera) que dice
+  "Local comercial en venta en El Puerto de Santa María" y lleva a esa página.
+  Cuando lo vendáis, solo hay que borrar ese bloque (te digo abajo cómo).
+- El PDF del dossier colgado en la web, para que la gente se lo pueda
+  descargar directamente sin tener que pedíroslo.
 
 PASO 1: INSTALAR LOS ARCHIVOS
 ------------------------------
-Copia estos archivos a tu proyecto local, sustituyendo los que ya existen:
+Copia todo el contenido de este zip a tu proyecto local, respetando las
+carpetas (sustituye los que ya existan):
 
-  src/lib/utils.ts                               (modificado)
-  src/lib/admin/actions.ts                       (modificado)
-  src/app/admin/(panel)/actividad/page.tsx       (modificado)
+  src/app/page.tsx                            (modificado — añade el aviso)
+  src/app/sitemap.ts                          (modificado — para que Google
+                                                 la encuentre)
+  src/app/inmueble-en-venta/page.tsx          (NUEVO — la página en sí)
+  public/inmueble-en-venta/*.webp             (NUEVO — las fotos, ya listas)
+  public/documentos/dossier-calle-aurora-3.pdf (NUEVO — el PDF descargable)
+
+No hay que tocar nada en Supabase ni en Vercel para esto.
 
 PASO 2: SUBIR LOS CAMBIOS
 ----------------------------
@@ -29,10 +34,18 @@ git add, git commit, git push, como siempre.
 
 PASO 3: PROBAR
 ----------------
-Entra en Actividad y comprueba que ahora aparecéis como "Javi" / "Mario" con su
-color, y que al lado de cada acción sale el detalle (qué precio cambió, si se
-marcó como destacado, qué nota se añadió a una solicitud, etc.).
+Entra en lovendoportidental.es y comprueba que sale el aviso negro debajo de
+la cabecera. Pincha en "Ver detalles" y revisa que la página, las fotos, el
+botón de WhatsApp (te debe abrir el chat con Mario con un mensaje ya escrito
+sobre el local) y el botón de descargar el PDF funcionan bien.
 
-Nota: como la tabla "admin_eventos" se creó hace poco, solo aparecerán aquí las
-acciones hechas DESPUÉS de crearla — lo de antes no queda registrado
-retroactivamente, es normal.
+CUANDO SE VENDA EL LOCAL
+---------------------------
+Para quitar el aviso de la home sin tocar nada más: abre src/app/page.tsx,
+busca el bloque que empieza por:
+
+  {/* OPORTUNIDAD ESPECIAL: local en venta (quitar este bloque cuando se venda) */}
+
+y bórralo entero (son unas 8 líneas, hasta el cierre </Link>). La página
+/inmueble-en-venta se puede dejar tal cual (ya no la enlazará nadie desde la
+home) o, si prefieres, dímelo y te la quito del todo en otra entrega.

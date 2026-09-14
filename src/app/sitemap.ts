@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [equipos, articulos] = await Promise.all([getEquipos({ estado: "todos" }), getArticulos()]);
-  const fijas = ["", "/equipos", "/vender-mi-equipo", "/busco-un-equipo", "/blog", "/quien-soy", "/contacto"].map(
+  const fijas = ["", "/equipos", "/vender-mi-equipo", "/busco-un-equipo", "/inmueble-en-venta", "/blog", "/quien-soy", "/contacto"].map(
     (p) => ({ url: `${SITE_URL}${p}`, changeFrequency: "weekly" as const, priority: p === "" ? 1 : 0.7 })
   );
   return [
