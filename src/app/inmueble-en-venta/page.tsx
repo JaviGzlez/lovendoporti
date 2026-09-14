@@ -8,7 +8,7 @@ import WhatsAppIcon from "@/components/WhatsAppIcon";
 export const metadata: Metadata = {
   title: "Local comercial en venta · Calle Aurora, El Puerto de Santa María",
   description:
-    "Inmueble de 274 m² útiles en pleno centro de El Puerto de Santa María, acondicionado como clínica dental. 8 gabinetes, patio privado de 22 m². 585.000 €.",
+    "Inmueble de 274 m² útiles en pleno centro de El Puerto de Santa María, acondicionado como clínica dental. 7 gabinetes, patio privado de 22 m². 585.000 €.",
   alternates: { canonical: `${SITE_URL}/inmueble-en-venta` },
 };
 
@@ -18,7 +18,7 @@ const MENSAJE_WHATSAPP =
 const DATOS = [
   { icon: Ruler, label: "Superficie útil", valor: "274,12 m²" },
   { icon: Ruler, label: "Superficie construida", valor: "315,23 m²" },
-  { icon: DoorOpen, label: "Gabinetes", valor: "8 (con preinstalación)" },
+  { icon: DoorOpen, label: "Gabinetes", valor: "7 (con preinstalación)" },
   { icon: Sun, label: "Patio privado", valor: "22 m² (uso exclusivo)" },
   { icon: MapPin, label: "Ubicación", valor: "Calle Aurora, 3 · El Puerto de Santa María (Cádiz)" },
   { icon: Banknote, label: "Precio de venta", valor: "585.000 €" },

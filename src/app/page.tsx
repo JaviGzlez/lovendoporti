@@ -72,7 +72,7 @@ export default async function HomePage() {
         className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 bg-ink px-4 py-3 text-center text-sm font-medium text-white transition hover:bg-ink/90"
       >
         <span className="rounded-full bg-brand px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide">Oportunidad</span>
-        <span>Local comercial en venta en El Puerto de Santa María — 274 m², 8 gabinetes</span>
+        <span>Local comercial en venta en El Puerto de Santa María — 274 m², 7 gabinetes</span>
         <span className="underline underline-offset-2">Ver detalles →</span>
       </Link>
 

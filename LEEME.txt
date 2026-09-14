@@ -5,9 +5,11 @@ QUÉ TRAE ESTE ZIP
 ------------------
 - Una página nueva en la web: lovendoportidental.es/inmueble-en-venta
   Con el texto que me pasaste de redes, los datos del dossier (274 m² útiles,
-  8 gabinetes, patio de 22 m², 585.000 €), una galería de fotos del local, el
+  7 gabinetes, patio de 22 m², 585.000 €), una galería de fotos del local, el
   plano, y dos botones: "Escribir a Mario por WhatsApp" (con un mensaje ya
   escrito sobre este local en concreto) y "Descargar dossier completo (PDF)".
+  (Esta entrega corrige la imagen del cartel que me pasaste mal y el número
+  de gabinetes, ahora a 7 en toda la página y en el aviso de la home.)
 - Un aviso destacado en la home (justo debajo de la cabecera) que dice
   "Local comercial en venta en El Puerto de Santa María" y lleva a esa página.
   Cuando lo vendáis, solo hay que borrar ese bloque (te digo abajo cómo).
