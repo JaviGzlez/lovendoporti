@@ -9,6 +9,13 @@ import { formatPrecio } from "@/lib/utils";
 import SubmitButton from "@/components/SubmitButton";
 import BorrarBoton from "@/components/admin/BorrarBoton";
 
+/** Versión para componentes cliente de fotoUrl() (que es server-only). */
+function fotoUrlCliente(path: string, bucket: "equipos" | "blog") {
+  if (path.startsWith("http") || path.startsWith("/")) return path;
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  return base ? `${base}/storage/v1/object/public/${bucket}/${path}` : "";
+}
+
 export default function EquipoEditForm({ equipo }: { equipo: Equipo }) {
   const [state, action] = useActionState<AdminActionResult | null, FormData>(actualizarEquipo, null);
   const rebajado = equipo.precio_anterior != null && equipo.precio_anterior > (equipo.precio ?? 0);
@@ -83,6 +90,28 @@ export default function EquipoEditForm({ equipo }: { equipo: Equipo }) {
       <div>
         <label className="label" htmlFor="descripcion">Descripción</label>
         <textarea id="descripcion" name="descripcion" rows={5} defaultValue={equipo.descripcion ?? ""} className="input" />
+      </div>
+
+      <div>
+        <label className="label">Fotos</label>
+        {equipo.fotos.length > 0 && (
+          <div className="mb-3 grid grid-cols-3 gap-3 sm:grid-cols-4">
+            {equipo.fotos.map((f) => (
+              <label key={f} className="group relative block overflow-hidden rounded-xl border border-line">
+                {/* eslint-disable-next-line @next/next/no-img-element -- ruta de Storage, no apta para next/image sin configurar el dominio */}
+                <img src={fotoUrlCliente(f, "equipos")} alt="" className="aspect-square w-full object-cover" />
+                <span className="absolute inset-x-0 bottom-0 flex items-center gap-1.5 bg-black/60 px-2 py-1 text-xs text-white">
+                  <input type="checkbox" name="fotos_quitar" value={f} className="h-3.5 w-3.5" /> Quitar
+                </span>
+              </label>
+            ))}
+          </div>
+        )}
+        <input id="fotos_nuevas" name="fotos_nuevas" type="file" accept="image/*" multiple className="input" />
+        <p className="mt-1.5 text-xs text-muted">
+          Añade fotos nuevas o marca «Quitar» en las que ya no quieras. Si una foto de iPhone da error, cámbiala
+          a JPG (Ajustes → Cámara → Formatos → «Más compatible») y prueba otra vez.
+        </p>
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line pt-5">

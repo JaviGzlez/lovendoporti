@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "Actividad · Área privada" };
 export const dynamic = "force-dynamic";
 
 const ACCION_LABEL: Record<string, string> = { crear: "creó", editar: "editó", borrar: "borró" };
-const ENTIDAD_LABEL: Record<string, string> = { equipo: "el equipo", articulo: "el artículo" };
+const ENTIDAD_LABEL: Record<string, string> = { equipo: "el equipo", articulo: "el artículo", solicitud: "la solicitud de" };
 
 export default async function ActividadPage() {
   const supabase = await createServerSupabase();

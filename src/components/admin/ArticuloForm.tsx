@@ -7,6 +7,13 @@ import { crearArticulo, actualizarArticulo, type AdminActionResult } from "@/lib
 import type { Articulo } from "@/lib/types";
 import SubmitButton from "@/components/SubmitButton";
 
+/** Versión para componentes cliente de fotoUrl() (que es server-only). */
+function fotoUrlCliente(path: string) {
+  if (path.startsWith("http") || path.startsWith("/")) return path;
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  return base ? `${base}/storage/v1/object/public/blog/${path}` : "";
+}
+
 export default function ArticuloForm({ articulo }: { articulo?: Articulo }) {
   const accion = articulo ? actualizarArticulo : crearArticulo;
   const [state, action] = useActionState<AdminActionResult | null, FormData>(accion, null);
@@ -31,7 +38,19 @@ export default function ArticuloForm({ articulo }: { articulo?: Articulo }) {
         <textarea id="extracto" name="extracto" rows={2} defaultValue={articulo?.extracto ?? ""} className="input" />
       </div>
       <div>
-        <label className="label" htmlFor="portada">Portada (ruta de la imagen)</label>
+        <label className="label">Portada</label>
+        {articulo?.portada && (
+          <div className="mb-3 max-w-sm overflow-hidden rounded-xl border border-line">
+            {/* eslint-disable-next-line @next/next/no-img-element -- ruta de Storage, no apta para next/image sin configurar el dominio */}
+            <img src={fotoUrlCliente(articulo.portada)} alt="" className="aspect-[16/9] w-full object-cover" />
+          </div>
+        )}
+        <input id="portada_nueva" name="portada_nueva" type="file" accept="image/*" className="input" />
+        <p className="mt-1.5 text-xs text-muted">
+          Sube una imagen para {articulo?.portada ? "cambiar" : "poner"} la portada. Si una foto de iPhone da
+          error, cámbiala a JPG (Ajustes → Cámara → Formatos → «Más compatible») y prueba otra vez.
+        </p>
+        <label className="label mt-3" htmlFor="portada">O pega una ruta manual (opcional, avanzado)</label>
         <input
           id="portada"
           name="portada"
@@ -39,7 +58,6 @@ export default function ArticuloForm({ articulo }: { articulo?: Articulo }) {
           className="input"
           placeholder="/equipos/mi-foto.webp"
         />
-        <p className="mt-1.5 text-xs text-muted">Si no tienes imagen todavía, déjalo en blanco.</p>
       </div>
       <div>
         <label className="label" htmlFor="contenido">Contenido (formato Markdown)</label>

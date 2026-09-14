@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { createAdminSupabase, createServerSupabase, supabaseConfigured } from "@/lib/supabase/server";
 import { slugify } from "@/lib/utils";
+import { subirFotos, archivosDe } from "@/lib/admin/storage";
 import type { EstadoEquipo, EstadoSolicitud, AccionEvento, EntidadEvento } from "@/lib/types";
 
 export interface AdminActionResult {
@@ -39,7 +40,7 @@ async function registrarEvento(
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  await supabase.from("admin_eventos").insert({
+  const { error } = await supabase.from("admin_eventos").insert({
     actor_email: user?.email ?? "desconocido",
     accion,
     entidad,
@@ -47,6 +48,9 @@ async function registrarEvento(
     entidad_nombre,
     detalle: detalle ?? null,
   });
+  // No hacemos que falle la acción principal por esto, pero si la tabla no
+  // existe o RLS lo bloquea queremos verlo en los logs de Vercel.
+  if (error) console.error("No se pudo registrar el evento de actividad", error);
 }
 
 /**
@@ -103,10 +107,19 @@ export async function actualizarEquipo(_: AdminActionResult | null, fd: FormData
   const supabase = await createServerSupabase();
   const { data: actual, error: errorLectura } = await supabase
     .from("equipos")
-    .select("precio, precio_anterior, estado, vendido_at")
+    .select("precio, precio_anterior, estado, vendido_at, slug, fotos")
     .eq("id", id)
     .maybeSingle();
   if (errorLectura || !actual) return { ok: false, error: "No se encontró el equipo." };
+
+  const fotosQuitar = fd.getAll("fotos_quitar").map(String);
+  let fotos: string[] = (actual.fotos ?? []).filter((f: string) => !fotosQuitar.includes(f));
+  const fotosNuevas = archivosDe(fd, "fotos_nuevas");
+  if (fotosNuevas.length) {
+    const subida = await subirFotos(supabase, "equipos", actual.slug, fotosNuevas);
+    fotos = [...fotos, ...subida.paths];
+    if (subida.error) return { ok: false, error: subida.error };
+  }
 
   let precioAnterior: number | null = actual.precio_anterior;
   if (quitarRebaja) {
@@ -140,6 +153,7 @@ export async function actualizarEquipo(_: AdminActionResult | null, fd: FormData
       visible,
       vendido_at: vendidoAt,
       descripcion: String(fd.get("descripcion") ?? "").trim() || null,
+      fotos,
     })
     .eq("id", id);
   if (error) {
@@ -190,13 +204,21 @@ export async function crearEquipo(_: AdminActionResult | null, fd: FormData): Pr
   const horasRaw = String(fd.get("horas_uso") ?? "").trim();
   const horas_uso = horasRaw ? Number(horasRaw) : null;
 
-  const fotos = String(fd.get("fotos") ?? "")
+  const fotosManual = String(fd.get("fotos") ?? "")
     .split("\n")
     .map((f) => f.trim())
     .filter(Boolean);
 
   const supabase = await createServerSupabase();
   const slug = await slugUnico(supabase, "equipos", nombre);
+
+  let fotos = [...fotosManual];
+  const fotosNuevas = archivosDe(fd, "fotos_nuevas");
+  if (fotosNuevas.length) {
+    const subida = await subirFotos(supabase, "equipos", slug, fotosNuevas);
+    fotos = [...fotos, ...subida.paths];
+    if (subida.error) return { ok: false, error: subida.error };
+  }
 
   const { data: nuevo, error } = await supabase
     .from("equipos")
@@ -268,6 +290,14 @@ export async function crearArticulo(_: AdminActionResult | null, fd: FormData): 
   const supabase = await createServerSupabase();
   const slug = await slugUnico(supabase, "articulos", titulo);
 
+  let portada = String(fd.get("portada") ?? "").trim() || null;
+  const [archivoPortada] = archivosDe(fd, "portada_nueva");
+  if (archivoPortada) {
+    const subida = await subirFotos(supabase, "blog", slug, [archivoPortada]);
+    if (subida.error) return { ok: false, error: subida.error };
+    portada = subida.paths[0] ?? portada;
+  }
+
   const { data: nuevo, error } = await supabase
     .from("articulos")
     .insert({
@@ -275,7 +305,7 @@ export async function crearArticulo(_: AdminActionResult | null, fd: FormData): 
       slug,
       extracto: String(fd.get("extracto") ?? "").trim() || null,
       contenido: String(fd.get("contenido") ?? "").trim() || null,
-      portada: String(fd.get("portada") ?? "").trim() || null,
+      portada,
       publicado,
       publicado_at: publicado ? new Date().toISOString() : null,
     })
@@ -309,11 +339,19 @@ export async function actualizarArticulo(_: AdminActionResult | null, fd: FormDa
 
   const { data: actual } = await supabase
     .from("articulos")
-    .select("publicado_at")
+    .select("publicado_at, slug")
     .eq("id", id)
     .maybeSingle();
 
   const publicado_at = publicado ? (actual?.publicado_at ?? new Date().toISOString()) : null;
+
+  let portada = String(fd.get("portada") ?? "").trim() || null;
+  const [archivoPortada] = archivosDe(fd, "portada_nueva");
+  if (archivoPortada) {
+    const subida = await subirFotos(supabase, "blog", actual?.slug ?? id, [archivoPortada]);
+    if (subida.error) return { ok: false, error: subida.error };
+    portada = subida.paths[0] ?? portada;
+  }
 
   const { error } = await supabase
     .from("articulos")
@@ -321,7 +359,7 @@ export async function actualizarArticulo(_: AdminActionResult | null, fd: FormDa
       titulo,
       extracto: String(fd.get("extracto") ?? "").trim() || null,
       contenido: String(fd.get("contenido") ?? "").trim() || null,
-      portada: String(fd.get("portada") ?? "").trim() || null,
+      portada,
       publicado,
       publicado_at,
     })
@@ -363,8 +401,14 @@ export async function borrarArticulo(id: string): Promise<AdminActionResult> {
 export async function actualizarEstadoSolicitud(id: string, estado: EstadoSolicitud) {
   if (!supabaseConfigured) return { ok: false, error: "Supabase no está configurado." };
   const supabase = await createServerSupabase();
+
+  const { data: solicitud } = await supabase.from("solicitudes").select("nombre").eq("id", id).maybeSingle();
+
   const { error } = await supabase.from("solicitudes").update({ estado }).eq("id", id);
   if (error) return { ok: false, error: "No se pudo actualizar." };
+
+  await registrarEvento(supabase, "editar", "solicitud", id, solicitud?.nombre ?? null, `Estado → ${estado}`);
+
   revalidatePath("/admin/solicitudes");
   revalidatePath(`/admin/solicitudes/${id}`);
   return { ok: true };
@@ -380,6 +424,9 @@ export async function agregarNota(_: AdminActionResult | null, fd: FormData): Pr
   const supabase = await createServerSupabase();
   const { error } = await supabase.from("solicitud_notas").insert({ solicitud_id, nota });
   if (error) return { ok: false, error: "No se pudo guardar la nota." };
+
+  const { data: solicitud } = await supabase.from("solicitudes").select("nombre").eq("id", solicitud_id).maybeSingle();
+  await registrarEvento(supabase, "editar", "solicitud", solicitud_id, solicitud?.nombre ?? null, `Nota: ${nota}`);
 
   revalidatePath(`/admin/solicitudes/${solicitud_id}`);
   return { ok: true };

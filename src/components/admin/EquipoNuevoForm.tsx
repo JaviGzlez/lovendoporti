@@ -59,12 +59,17 @@ export default function EquipoNuevoForm({ categorias }: { categorias: Categoria[
         <textarea id="incluye" name="incluye" rows={3} className="input" />
       </div>
       <div>
-        <label className="label" htmlFor="fotos">Fotos (una ruta por línea)</label>
-        <textarea id="fotos" name="fotos" rows={2} className="input" placeholder="/equipos/mi-foto.webp" />
+        <label className="label" htmlFor="fotos_nuevas">Fotos (puedes elegir varias a la vez)</label>
+        <input id="fotos_nuevas" name="fotos_nuevas" type="file" accept="image/*" multiple className="input" />
         <p className="mt-1.5 text-xs text-muted">
-          Si todavía no tienes las imágenes preparadas, déjalo en blanco y publica el equipo igualmente —
-          pásame las fotos cuando puedas y las añado yo.
+          Se suben y se ajustan solas. Si usas iPhone y alguna foto da error, en Ajustes → Cámara → Formatos
+          elige «Más compatible» y vuelve a intentarlo (o compártela por WhatsApp contigo mismo y sube esa copia).
+          Si todavía no tienes fotos, déjalo en blanco y publica el equipo igual.
         </p>
+      </div>
+      <div>
+        <label className="label" htmlFor="fotos">¿Ya tienes fotos subidas en otro sitio? (opcional, avanzado)</label>
+        <textarea id="fotos" name="fotos" rows={2} className="input" placeholder="/equipos/mi-foto.webp" />
       </div>
 
       <div className="grid gap-3 sm:grid-cols-3">

@@ -112,7 +112,7 @@ export interface Venta {
 }
 
 export type AccionEvento = "crear" | "editar" | "borrar";
-export type EntidadEvento = "equipo" | "articulo";
+export type EntidadEvento = "equipo" | "articulo" | "solicitud";
 
 export interface AdminEvento {
   id: string;
