@@ -100,6 +100,31 @@ export interface SolicitudNota {
   created_at: string;
 }
 
+export interface Venta {
+  id: string;
+  equipo_id: string;
+  solicitud_id: string | null;
+  fecha: string;
+  precio_final: number;
+  ingreso: number;
+  notas: string | null;
+  created_at: string;
+}
+
+export type AccionEvento = "crear" | "editar" | "borrar";
+export type EntidadEvento = "equipo" | "articulo";
+
+export interface AdminEvento {
+  id: string;
+  actor_email: string;
+  accion: AccionEvento;
+  entidad: EntidadEvento;
+  entidad_id: string | null;
+  entidad_nombre: string | null;
+  detalle: string | null;
+  created_at: string;
+}
+
 export const TIPO_SOLICITUD_LABEL: Record<TipoSolicitud, string> = {
   comprar: "Consulta (comprar)",
   vender: "Vender mi equipo",

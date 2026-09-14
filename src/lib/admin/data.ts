@@ -1,6 +1,15 @@
 import "server-only";
 import { createServerSupabase } from "@/lib/supabase/server";
-import type { Categoria, Equipo, Solicitud, SolicitudNota, TipoSolicitud, EstadoSolicitud } from "@/lib/types";
+import type {
+  Articulo,
+  AdminEvento,
+  Categoria,
+  Equipo,
+  Solicitud,
+  SolicitudNota,
+  TipoSolicitud,
+  EstadoSolicitud,
+} from "@/lib/types";
 
 const EQUIPO_SELECT = "*, categoria:categorias(*)";
 
@@ -61,13 +70,15 @@ export interface ResumenPanel {
   equiposVendidos: number;
   solicitudesNuevas: number;
   solicitudesPorTipo: Record<TipoSolicitud, number>;
+  ventasDelMes: { numVentas: number; totalFacturado: number };
 }
 
 export async function getResumenPanel(): Promise<ResumenPanel> {
   const sb = await createServerSupabase();
-  const [{ data: equipos }, { data: nuevas }] = await Promise.all([
+  const [{ data: equipos }, { data: nuevas }, ventasDelMes] = await Promise.all([
     sb.from("equipos").select("estado"),
     sb.from("solicitudes").select("tipo").eq("estado", "nuevo"),
+    getVentasDelMesActual(),
   ]);
 
   const porEstado = { disponible: 0, reservado: 0, vendido: 0 };
@@ -82,5 +93,77 @@ export async function getResumenPanel(): Promise<ResumenPanel> {
     equiposVendidos: porEstado.vendido,
     solicitudesNuevas: (nuevas ?? []).length,
     solicitudesPorTipo: porTipo,
+    ventasDelMes,
   };
+}
+
+// ---------------------------------------------------------------------------
+// Blog (panel)
+// ---------------------------------------------------------------------------
+export async function getArticulosAdmin(): Promise<Articulo[]> {
+  const sb = await createServerSupabase();
+  const { data } = await sb.from("articulos").select("*").order("created_at", { ascending: false });
+  return (data ?? []) as Articulo[];
+}
+
+export async function getArticuloByIdAdmin(id: string): Promise<Articulo | null> {
+  const sb = await createServerSupabase();
+  const { data } = await sb.from("articulos").select("*").eq("id", id).maybeSingle();
+  return (data as Articulo | null) ?? null;
+}
+
+// ---------------------------------------------------------------------------
+// Ventas
+// ---------------------------------------------------------------------------
+export interface ResumenVentaMes {
+  mes: string; // "2026-01"
+  etiqueta: string; // "Enero 2026"
+  numVentas: number;
+  totalFacturado: number;
+  totalIngreso: number;
+}
+
+const MESES = [
+  "enero", "febrero", "marzo", "abril", "mayo", "junio",
+  "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+];
+
+export async function getVentasPorMes(): Promise<ResumenVentaMes[]> {
+  const sb = await createServerSupabase();
+  const { data } = await sb.from("ventas").select("fecha, precio_final, ingreso");
+
+  const porMes = new Map<string, ResumenVentaMes>();
+  for (const v of data ?? []) {
+    const mes = String(v.fecha).slice(0, 7); // "YYYY-MM"
+    const [anio, mesNum] = mes.split("-");
+    const etiqueta = `${MESES[Number(mesNum) - 1] ?? mes} ${anio}`;
+    const actual = porMes.get(mes) ?? { mes, etiqueta, numVentas: 0, totalFacturado: 0, totalIngreso: 0 };
+    actual.numVentas += 1;
+    actual.totalFacturado += Number(v.precio_final ?? 0);
+    actual.totalIngreso += Number(v.ingreso ?? 0);
+    porMes.set(mes, actual);
+  }
+  return Array.from(porMes.values()).sort((a, b) => b.mes.localeCompare(a.mes));
+}
+
+export async function getVentasDelMesActual(): Promise<{ numVentas: number; totalFacturado: number }> {
+  const mesActual = new Date().toISOString().slice(0, 7);
+  const meses = await getVentasPorMes();
+  const actual = meses.find((m) => m.mes === mesActual);
+  return { numVentas: actual?.numVentas ?? 0, totalFacturado: actual?.totalFacturado ?? 0 };
+}
+
+// ---------------------------------------------------------------------------
+// Actividad (historial de creación/edición/borrado) — solo lo ve Javi.
+// La propia base de datos (RLS) ya impide que Mario lea esta tabla aunque
+// alguien intentara acceder directamente a esta función.
+// ---------------------------------------------------------------------------
+export async function getEventosAdmin(limit = 200): Promise<AdminEvento[]> {
+  const sb = await createServerSupabase();
+  const { data } = await sb
+    .from("admin_eventos")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  return (data ?? []) as AdminEvento[];
 }

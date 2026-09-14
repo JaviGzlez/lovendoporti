@@ -4,6 +4,7 @@ import { Pencil, Plus } from "lucide-react";
 import { getEquiposAdmin } from "@/lib/admin/data";
 import { formatPrecio } from "@/lib/utils";
 import EstadoBadge from "@/components/EstadoBadge";
+import BorrarBoton from "@/components/admin/BorrarBoton";
 
 export const metadata: Metadata = { title: "Equipos · Área privada" };
 export const dynamic = "force-dynamic";
@@ -18,6 +19,9 @@ export default async function AdminEquiposPage() {
           <h1 className="text-2xl font-bold tracking-tight">Equipos</h1>
           <p className="mt-1 text-muted">{equipos.length} equipos en el catálogo.</p>
         </div>
+        <Link href="/admin/equipos/nuevo" className="btn-primary">
+          <Plus className="h-4 w-4" /> Nuevo equipo
+        </Link>
       </div>
 
       <div className="card overflow-hidden">
@@ -31,6 +35,7 @@ export default async function AdminEquiposPage() {
                 <th className="px-4 py-3">Estado</th>
                 <th className="px-4 py-3">Etiquetas</th>
                 <th className="px-4 py-3">Visible</th>
+                <th className="px-4 py-3" />
                 <th className="px-4 py-3" />
               </tr>
             </thead>
@@ -81,6 +86,9 @@ export default async function AdminEquiposPage() {
                         <Pencil className="h-3.5 w-3.5" /> Editar
                       </Link>
                     </td>
+                    <td className="px-4 py-3 text-right">
+                      <BorrarBoton tipo="equipo" id={e.id} nombre={e.nombre} />
+                    </td>
                   </tr>
                 );
               })}
@@ -91,8 +99,9 @@ export default async function AdminEquiposPage() {
 
       <p className="flex items-start gap-2 rounded-xl bg-brand-light/60 p-4 text-sm text-ink/80">
         <Plus className="mt-0.5 h-4 w-4 shrink-0 text-brand" />
-        Para añadir un equipo nuevo al catálogo (con sus fotos), de momento pídemelo y lo subo yo. Más adelante
-        podemos añadir aquí también el alta con subida de fotos si os interesa.
+        Al crear un equipo puedes dejar las fotos en blanco y publicarlo igual — pásamelas cuando puedas y las
+        añado yo. Si quieres borrar uno que ya tiene una venta registrada, márcalo como «no visible» en su ficha
+        en vez de borrarlo, para no perder ese dato del historial de ventas.
       </p>
     </div>
   );

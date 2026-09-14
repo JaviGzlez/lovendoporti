@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Package, Inbox, LogOut, ExternalLink } from "lucide-react";
+import { LayoutDashboard, Package, Inbox, Newspaper, TrendingUp, ShieldCheck, LogOut, ExternalLink } from "lucide-react";
 import { adminLogout } from "@/lib/admin/actions";
 import { cn } from "@/lib/utils";
 
@@ -10,10 +10,15 @@ const LINKS = [
   { href: "/admin", label: "Resumen", icon: LayoutDashboard },
   { href: "/admin/equipos", label: "Equipos", icon: Package },
   { href: "/admin/solicitudes", label: "Solicitudes", icon: Inbox },
+  { href: "/admin/blog", label: "Blog", icon: Newspaper },
+  { href: "/admin/ventas", label: "Ventas", icon: TrendingUp },
 ];
 
-export default function AdminNav({ email }: { email: string }) {
+export default function AdminNav({ email, isAdminPrincipal }: { email: string; isAdminPrincipal: boolean }) {
   const pathname = usePathname();
+  const links = isAdminPrincipal
+    ? [...LINKS, { href: "/admin/actividad", label: "Actividad", icon: ShieldCheck }]
+    : LINKS;
 
   return (
     <header className="border-b border-line bg-white">
@@ -22,8 +27,8 @@ export default function AdminNav({ email }: { email: string }) {
           <Link href="/admin" className="text-lg font-bold tracking-tight text-brand">
             Lo vendo por ti
           </Link>
-          <nav className="flex items-center gap-1">
-            {LINKS.map((l) => {
+          <nav className="flex flex-wrap items-center gap-1">
+            {links.map((l) => {
               const active = l.href === "/admin" ? pathname === "/admin" : pathname.startsWith(l.href);
               return (
                 <Link

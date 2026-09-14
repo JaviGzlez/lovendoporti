@@ -7,6 +7,7 @@ import { actualizarEquipo, type AdminActionResult } from "@/lib/admin/actions";
 import type { Equipo } from "@/lib/types";
 import { formatPrecio } from "@/lib/utils";
 import SubmitButton from "@/components/SubmitButton";
+import BorrarBoton from "@/components/admin/BorrarBoton";
 
 export default function EquipoEditForm({ equipo }: { equipo: Equipo }) {
   const [state, action] = useActionState<AdminActionResult | null, FormData>(actualizarEquipo, null);
@@ -92,9 +93,12 @@ export default function EquipoEditForm({ equipo }: { equipo: Equipo }) {
         >
           Ver ficha pública <ExternalLink className="h-3.5 w-3.5" />
         </Link>
-        <SubmitButton className="btn-primary">
-          <Save className="h-4 w-4" /> Guardar cambios
-        </SubmitButton>
+        <div className="flex items-center gap-3">
+          <BorrarBoton tipo="equipo" id={equipo.id} nombre={equipo.nombre} redirigirA="/admin/equipos" />
+          <SubmitButton className="btn-primary">
+            <Save className="h-4 w-4" /> Guardar cambios
+          </SubmitButton>
+        </div>
       </div>
     </form>
   );

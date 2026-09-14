@@ -1,0 +1,87 @@
+LO VENDO POR TI — Ampliación del panel (blog, alta/baja de equipos, ventas, actividad)
+========================================================================================
+
+QUÉ TRAE ESTE ZIP
+------------------
+1. Blog editable desde el panel: crear, editar, publicar/despublicar y borrar artículos.
+2. Alta de equipos nuevos desde el panel (con categoría, para que salgan en el filtro
+   correcto: Fresadoras, Hornos, etc.) y opción de borrar un equipo.
+3. Registro automático de ventas: en cuanto marcas un equipo como "Vendido" en su ficha,
+   queda apuntado solo, sin que tengas que hacer nada más.
+4. Página "Ventas" con el resumen mes a mes (nº de equipos vendidos y total facturado).
+5. Página "Actividad": un historial de qué se ha creado, editado o borrado en el panel
+   y quién lo hizo. SOLO la ve la cuenta de Javi (javi@lovendoportidental.es) — Mario no
+   la ve ni aunque intente entrar directamente por la URL, porque además está bloqueado
+   a nivel de base de datos (no es solo "ocultar el botón").
+
+PASO 1: INSTALAR LOS ARCHIVOS
+------------------------------
+Copia todos los archivos y carpetas de este zip dentro de tu proyecto local, respetando
+las mismas rutas (sustituyendo los que ya existan). Son archivos nuevos y modificaciones
+de los siguientes, todos dentro de tu carpeta del proyecto:
+
+  src/lib/admin/auth.ts                          (NUEVO)
+  src/lib/types.ts                               (modificado)
+  src/lib/admin/actions.ts                       (modificado)
+  src/lib/admin/data.ts                          (modificado)
+  src/components/admin/AdminNav.tsx              (modificado)
+  src/components/admin/EquipoNuevoForm.tsx       (NUEVO)
+  src/components/admin/EquipoEditForm.tsx        (modificado)
+  src/components/admin/BorrarBoton.tsx           (NUEVO)
+  src/components/admin/ArticuloForm.tsx          (NUEVO)
+  src/app/admin/(panel)/layout.tsx               (modificado)
+  src/app/admin/(panel)/page.tsx                 (modificado)
+  src/app/admin/(panel)/equipos/page.tsx         (modificado)
+  src/app/admin/(panel)/equipos/nuevo/page.tsx   (NUEVO)
+  src/app/admin/(panel)/blog/page.tsx            (NUEVO)
+  src/app/admin/(panel)/blog/nuevo/page.tsx      (NUEVO)
+  src/app/admin/(panel)/blog/[id]/page.tsx       (NUEVO)
+  src/app/admin/(panel)/ventas/page.tsx          (NUEVO)
+  src/app/admin/(panel)/actividad/page.tsx       (NUEVO)
+  supabase/schema.sql                            (modificado, solo referencia)
+  supabase/migration-002-admin-eventos.sql       (NUEVO — este es el que hay que ejecutar)
+
+No hay ningún archivo que borrar esta vez.
+
+PASO 2: EJECUTAR LA MIGRACIÓN EN SUPABASE
+-------------------------------------------
+Como tu proyecto de Supabase ya existe (ya ejecutaste schema.sql antes), solo hace
+falta añadir la tabla nueva de "Actividad". No hay que volver a ejecutar schema.sql
+entero.
+
+1. Entra en Supabase → tu proyecto → SQL Editor → New query.
+2. Abre el archivo supabase/migration-002-admin-eventos.sql, copia todo su contenido
+   y pégalo ahí.
+3. Dale a "Run".
+
+Con eso ya está la base de datos lista. (El archivo schema.sql del zip solo se ha
+actualizado por si algún día montáis el proyecto desde cero otra vez — no hace falta
+tocarlo ahora.)
+
+PASO 3: SUBIR LOS CAMBIOS
+----------------------------
+Haz el commit y el push como siempre (git add, git commit, git push) para que Vercel
+despliegue la nueva versión automáticamente.
+
+PASO 4: PROBAR
+----------------
+Entra en lovendoportidental.es/admin con tu usuario (javi@lovendoportidental.es) y
+comprueba:
+  - En el menú de arriba ahora aparecen "Blog", "Ventas" y (solo para ti) "Actividad".
+  - Equipos: botón "Nuevo equipo" arriba, y un botón "Borrar" en cada fila y dentro
+    de la ficha de edición.
+  - Blog: puedes crear un artículo de prueba, marcarlo publicado y verlo en /blog.
+  - Marca cualquier equipo como "Vendido" en su ficha y comprueba que aparece en
+    "Ventas".
+  - Entra con la cuenta de Mario y confirma que el enlace "Actividad" no aparece en
+    su menú (y que si teclea la URL a mano, lo manda de vuelta al Resumen).
+
+NOTAS
+------
+- Las fotos de equipos y la portada de artículos se siguen añadiendo escribiendo la
+  ruta a mano (por ejemplo /equipos/mi-foto.webp) — la subida de imágenes con "arrastrar
+  y soltar" desde el panel no está construida todavía. Si quieres, lo dejamos para una
+  siguiente vuelta.
+- Si intentas borrar un equipo que ya tiene una venta registrada, el sistema no te deja
+  (para no perder ese dato del historial) y te sugiere marcarlo como "no visible" en su
+  lugar — es el comportamiento esperado, no un error.

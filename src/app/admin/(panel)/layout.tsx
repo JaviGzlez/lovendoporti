@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { createServerSupabase, supabaseConfigured } from "@/lib/supabase/server";
+import { esAdminPrincipal } from "@/lib/admin/auth";
 import AdminNav from "@/components/admin/AdminNav";
 
 export const metadata: Metadata = { robots: { index: false, follow: false } };
@@ -32,7 +33,7 @@ export default async function AdminPanelLayout({ children }: LayoutProps<"/admin
 
   return (
     <div className="min-h-screen bg-surface">
-      <AdminNav email={user.email ?? ""} />
+      <AdminNav email={user.email ?? ""} isAdminPrincipal={esAdminPrincipal(user.email)} />
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">{children}</main>
     </div>
   );

@@ -144,6 +144,24 @@ create table ventas (
 create index ventas_fecha_idx on ventas (fecha desc);
 
 -- ---------------------------------------------------------------------
+-- Actividad interna (auditoría): quién crea/edita/borra qué en el panel.
+--   Solo Javi puede leer esta tabla (ver política más abajo); Mario puede
+--   usar el panel con total normalidad sin verla.
+-- ---------------------------------------------------------------------
+create table admin_eventos (
+  id             uuid primary key default gen_random_uuid(),
+  actor_email    text not null,
+  accion         text not null,   -- 'crear' | 'editar' | 'borrar'
+  entidad        text not null,   -- 'equipo' | 'articulo'
+  entidad_id     uuid,
+  entidad_nombre text,
+  detalle        text,
+  created_at     timestamptz not null default now()
+);
+
+create index admin_eventos_created_idx on admin_eventos (created_at desc);
+
+-- ---------------------------------------------------------------------
 -- Blog
 -- ---------------------------------------------------------------------
 create table articulos (
@@ -203,6 +221,7 @@ alter table solicitud_notas enable row level security;
 alter table ventas          enable row level security;
 alter table articulos       enable row level security;
 alter table eventos         enable row level security;
+alter table admin_eventos   enable row level security;
 
 -- Lectura pública
 create policy "categorias publicas" on categorias for select using (true);
@@ -222,6 +241,13 @@ create policy "admin notas"       on solicitud_notas for all to authenticated us
 create policy "admin ventas"      on ventas          for all to authenticated using (true) with check (true);
 create policy "admin articulos"   on articulos       for all to authenticated using (true) with check (true);
 create policy "admin eventos"     on eventos         for all to authenticated using (true) with check (true);
+
+-- admin_eventos (historial de actividad): cualquiera autenticado puede
+-- insertar (para que quede registrado lo que hace cada uno), pero solo
+-- Javi puede leerlo.
+create policy "admin_eventos insertar" on admin_eventos for insert to authenticated with check (true);
+create policy "admin_eventos leer" on admin_eventos for select to authenticated
+  using (lower(auth.jwt() ->> 'email') = 'javi@lovendoportidental.es');
 
 -- =====================================================================
 -- STORAGE
