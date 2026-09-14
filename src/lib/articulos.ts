@@ -14,13 +14,13 @@ const SEED: Seed[] = [
     slug: "comprar-fresadora-dental-segunda-mano-que-revisar",
     titulo: "Comprar una fresadora dental de segunda mano: qué revisar antes de decidirte",
     extracto:
-      "Horas de husillo, ejes, calibración, software y accesorios: la lista que uso yo antes de recomendar una fresadora usada.",
+      "Horas de husillo, ejes, calibración, software y accesorios: las comprobaciones clave antes de decidirte por una fresadora usada.",
     portada: "/equipos/roland-dwx-52dci.webp",
     dias: 1,
     contenido: `
 Una fresadora es, casi siempre, la inversión más grande de un laboratorio dental. Y también es el equipo donde más se nota la diferencia entre comprar bien y comprar mal de segunda mano. Llevo años viendo máquinas entrar y salir de laboratorios, y te puedo decir que una fresadora usada bien elegida trabaja igual que una nueva durante muchos años. Una mal elegida, en cambio, se convierte en un pozo de averías.
 
-Esta es la lista que reviso yo antes de recomendar cualquier fresadora que pasa por **Lo vendo por ti**.
+Esta es la lista que conviene repasar antes de decidirte por una fresadora.
 
 ## 1. Las horas del husillo, no las de la máquina
 
@@ -34,11 +34,11 @@ No es lo mismo una máquina que ha trabajado sobre todo zirconio y PMMA (en seco
 
 ## 3. Estado de los ejes y precisión
 
-Con la máquina en marcha, comprueba que los desplazamientos son suaves, sin ruidos ni vibraciones raras. Si puedes, pide que se frese una **pieza de prueba** (una corona o una estructura sencilla) y mide el ajuste. Una fresadora descalibrada se nota enseguida en los ajustes marginales. La calibración se puede hacer, pero conviene saber de antemano si hace falta y cuánto cuesta.
+Con la máquina en marcha, comprueba que los desplazamientos son suaves, sin ruidos ni vibraciones raras. Si puedes, pide que se frese una **pieza de prueba** (una corona o una estructura sencilla). Una fresadora descalibrada se nota enseguida en los ajustes marginales. La calibración se puede hacer, pero conviene saber de antemano si hace falta y cuánto cuesta.
 
 ## 4. Cambiador de herramientas y accesorios
 
-Revisa que el cambiador automático funciona con todas las posiciones y que se incluye un juego de fresas en buen estado. Comprueba también qué viene con la máquina: aspiración, compresor, portadiscos, adaptadores para bloques, refrigeración si es de húmedo. Estos accesorios suman fácilmente varios miles de euros si los tienes que comprar aparte, y muchas veces se olvidan al comparar precios.
+Revisa que el cambiador automático funciona con todas las posiciones. Comprueba también qué viene con la máquina: aspiración, compresor, portadiscos, adaptadores para bloques, refrigeración si es de húmedo. Estos accesorios suman fácilmente varios miles de euros si los tienes que comprar aparte, y muchas veces se olvidan al comparar precios.
 
 ## 5. Software y licencias
 
@@ -66,7 +66,7 @@ El error más frecuente es dejarse llevar solo por el precio y no pedir el dato 
 
 ## Mi consejo
 
-No compres una fresadora usada solo por el precio ni solo por la marca. Compra la que tenga el historial claro, el husillo revisado y el software en regla. Y si tienes dudas, escríbeme: puedo revisar contigo cualquier equipo antes de que te decidas, sea nuestro o no. Puedes ver las [fresadoras que tenemos disponibles ahora mismo](/equipos?categoria=fresadoras) o [contarme qué buscas](/busco-un-equipo) y te aviso cuando entre una que encaje.
+No compres una fresadora usada solo por el precio ni solo por la marca. Compra la que tenga el historial claro, el husillo revisado y el software en regla. Y si tienes dudas, escríbeme: puedo ayudarte a valorar cualquier equipo antes de que te decidas, sea nuestro o no. Puedes ver las [fresadoras que tenemos disponibles ahora mismo](/equipos?categoria=fresadoras) o [contarme qué buscas](/busco-un-equipo) y te aviso cuando entre una que encaje.
 `,
   },
   {
@@ -87,7 +87,7 @@ Lo que debes preguntar es cuántos ciclos llevan las resistencias actuales y cu�
 
 ## El termopar y la precisión de temperatura
 
-El termopar es el sensor que mide la temperatura dentro de la cámara. Si está desgastado o descalibrado, el horno puede estar sinterizando a una temperatura distinta de la que marca, y eso se traduce en zirconio con mala translucidez, tonos que no coinciden o piezas frágiles. Pide que se haga un ciclo de prueba con un **anillo de control** o una pieza de zirconio y compara el resultado con lo esperado.
+El termopar es el sensor que mide la temperatura dentro de la cámara. Si está desgastado o descalibrado, el horno puede estar sinterizando a una temperatura distinta de la que marca, y eso se traduce en zirconio con mala translucidez, tonos que no coinciden o piezas frágiles. Pide que se haga un ciclo de prueba con una pieza de zirconio y compara el resultado con lo esperado.
 
 ## La cámara y el aislamiento
 
@@ -96,10 +96,6 @@ Abre el horno y mira la cámara con luz. Grietas pequeñas en el aislamiento ref
 ## Ciclos y programas
 
 Un horno de segunda mano debe permitir programar los ciclos que usas tú: rampas de subida, mantenimiento a temperatura máxima y enfriamiento controlado. Los ciclos rápidos (speed sintering) exigen más al horno, así que si el anterior propietario los usaba mucho, es un dato relevante. Comprueba que la electrónica responde bien, que la pantalla no tiene fallos y que los programas se guardan.
-
-## Instalación eléctrica
-
-Muchos hornos de sinterizado necesitan una toma **monofásica de alta potencia o trifásica**. Antes de comprar, confirma qué alimentación necesita y si tu laboratorio la tiene. Es un detalle tonto, pero he visto hornos parados semanas esperando a un electricista.
 
 ## Marcas y recambios
 
@@ -119,11 +115,11 @@ Antes de decidirte, pide siempre estos cuatro datos por escrito: número de cicl
 
 ## Errores que veo repetirse
 
-El error más común es fijarse solo en el precio y olvidar el coste de un juego de resistencias nuevo, que hay que sumar mentalmente si están muy gastadas. El segundo es no probar un ciclo real antes de comprar, confiando en que "un horno siempre funciona igual". Y el tercero es no preguntar por la alimentación eléctrica hasta después de comprarlo, cuando ya has pagado el transporte y descubres que tu cuadro eléctrico no da la potencia necesaria.
+El error más común es fijarse solo en el precio y olvidar el coste de un juego de resistencias nuevo, que hay que sumar mentalmente si están muy gastadas. El segundo es no probar un ciclo real antes de comprar, confiando en que "un horno siempre funciona igual".
 
 ## Resumen rápido
 
-Pregunta por los ciclos de las resistencias, pide una prueba de sinterizado, revisa la cámara con luz y confirma la alimentación eléctrica. Con esos cuatro puntos claros, un horno usado es una de las compras más seguras que puedes hacer para tu laboratorio. Y si quieres que lo revisemos juntos antes de decidir, [escríbeme por WhatsApp](/contacto).
+Pregunta por los ciclos de las resistencias, pide una prueba de sinterizado y revisa la cámara con luz. Con esos tres puntos claros, un horno usado es una de las compras más seguras que puedes hacer para tu laboratorio. Y si quieres que lo veamos juntos antes de decidir, [escríbeme por WhatsApp](/contacto).
 `,
   },
   {
@@ -314,7 +310,7 @@ Sí, siempre que compres con información, con la posibilidad de preguntar y con
     titulo: "Cómo se valora un equipo dental usado: los factores que marcan el precio",
     extracto:
       "Antigüedad, horas, mantenimiento, accesorios, software y demanda. Así calculamos el precio justo de cada equipo.",
-    portada: "/equipos/labomed-microscopio.webp",
+    portada: "/equipos/amann-girrbach-mikro-5x.webp",
     dias: 32,
     contenido: `
 "¿Cuánto vale mi equipo?" es la pregunta que más me hacen. Y la respuesta honesta es: depende. Pero no depende de cualquier cosa; depende de unos pocos factores concretos que se pueden analizar. Te explico cómo lo hacemos en Lo vendo por ti para llegar a un precio que sea justo para quien vende y atractivo para quien compra.
@@ -337,7 +333,7 @@ Las facturas de revisiones y recambios son dinero. Un equipo con mantenimiento d
 
 ## 5. Qué incluye
 
-Accesorios, consumibles, herramientas, licencias de software, formación, garantía restante. Cada cosa que se incluye suma valor real y evita que el comprador tenga que gastar aparte. Una fresadora con aspiración, compresor y juego de fresas no es la misma oferta que la fresadora sola.
+Accesorios, consumibles, herramientas, licencias de software, garantía restante. Cada cosa que se incluye suma valor real y evita que el comprador tenga que gastar aparte. Una fresadora con aspiración, compresor y juego de fresas no es la misma oferta que la fresadora sola.
 
 ## 6. Demanda del modelo
 

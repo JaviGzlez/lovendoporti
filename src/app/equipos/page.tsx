@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Equipos dentales de segunda mano",
   description:
-    "Catálogo de fresadoras, escáneres, hornos, impresoras 3D y más maquinaria dental de segunda mano revisada.",
+    "Catálogo de fresadoras, escáneres, hornos, impresoras 3D y más maquinaria dental de segunda mano.",
 };
 
 const ESTADOS = [
@@ -53,7 +53,7 @@ export default async function EquiposPage({ searchParams }: PageProps<"/equipos"
           {catActual ? catActual.nombre : "Equipos dentales de segunda mano"}
         </h1>
         <p className="mt-2 text-muted">
-          Cada equipo está revisado y publicado con información real. ¿No encuentras lo que buscas?{" "}
+          Cada equipo se publica con información real. ¿No encuentras lo que buscas?{" "}
           <Link href="/busco-un-equipo" className="text-brand underline">
             Cuéntanoslo
           </Link>

@@ -177,8 +177,7 @@ export default async function HomePage() {
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">Hola, soy Mario Zarzuela</h2>
               <p className="mt-4 max-w-xl text-muted">
                 Llevo años en el sector dental y creé Lo vendo por ti para ayudar a profesionales como tú a comprar y
-                vender equipos de forma sencilla, segura y cercana. Cada equipo lo reviso yo y te acompaño en todo el
-                proceso.
+                vender equipos de forma sencilla, segura y cercana. Te acompaño en todo el proceso.
               </p>
               <p className="mt-4 font-hand text-2xl text-brand">Más que maquinaria, personas</p>
               <Link href="/quien-soy" className="btn-outline mt-6 bg-white">
